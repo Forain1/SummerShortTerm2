@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.19)
 project(V1 LANGUAGES CXX)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
 qt_standard_project_setup()
 
@@ -15,6 +17,14 @@ qt_add_executable(V1
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    view/scene.h view/scene.cpp
+    view/menu.h view/menu.cpp view/menu.ui
+    src.qrc
+    view/cast.h view/cast.cpp view/cast.ui
+    view/roleselection.h view/roleselection.cpp view/roleselection.ui
+
+
+
 )
 
 target_link_libraries(V1
@@ -22,6 +32,8 @@ target_link_libraries(V1
         Qt::Core
         Qt::Widgets
 )
+target_link_libraries(V1 PRIVATE Qt6::Widgets)
+target_link_libraries(V1 PRIVATE Qt6::Widgets)
 
 include(GNUInstallDirs)
 
