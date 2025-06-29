@@ -2,6 +2,7 @@
 #define SCENE_H
 
 #include <QWidget>
+#include <QPixmap>
 
 class Scene : public QWidget
 {
@@ -14,6 +15,7 @@ protected:
     void paintEvent(QPaintEvent* event);
 private:
     QString bgPath;
+    QPixmap bg;
 };
 
 #endif // SCENE_H

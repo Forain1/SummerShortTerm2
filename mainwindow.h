@@ -18,10 +18,11 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+protected:
 
 private:
     enum pageIndex{
-        MenuIndex,CastIndex,FightIndex,SettleIndex
+        MenuIndex,CastIndex,BattleIndex,SettleIndex
     };
     Ui::MainWindow *ui;
 
