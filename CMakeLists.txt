@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.19)
 project(V1 LANGUAGES CXX)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Core)
 
 qt_standard_project_setup()
 
@@ -15,6 +19,10 @@ qt_add_executable(V1
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    model/character.h model/character.cpp
+    model/characterstate.h model/characterstate.cpp
+    controller/scenecontroller.h controller/scenecontroller.cpp
+
 )
 
 target_link_libraries(V1
@@ -22,6 +30,10 @@ target_link_libraries(V1
         Qt::Core
         Qt::Widgets
 )
+target_link_libraries(V1 PRIVATE Qt6::Core)
+target_link_libraries(V1 PRIVATE Qt6::Core)
+target_link_libraries(V1 PRIVATE Qt6::Core)
+target_link_libraries(V1 PRIVATE Qt6::Core)
 
 include(GNUInstallDirs)
 
