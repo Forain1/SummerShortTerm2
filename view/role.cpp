@@ -6,7 +6,7 @@ Role::Role(int num,QWidget *parent)
     , ui(new Ui::Role)
 {
     ui->setupUi(this);
-    connect(ui->roleBtn,&QPushButton::clicked,this,[this](){emit this->RoleBtnClicked(this->roleNum);});
+    connect(ui->roleBtn,&QPushButton::clicked,this,[this](){emit this->roleBtnClicked(this->roleNum);});
 }
 
 Role::~Role()

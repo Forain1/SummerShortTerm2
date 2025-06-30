@@ -10,10 +10,10 @@ Cast::Cast(QWidget *parent,QString path)
     for(int i = 0 ; i<roleCounts ; i++ ){
         Role* role = new Role(i,this);
         ui->roleLayout->addWidget(role);
-        connect(role,&Role::RoleBtnClicked,this,&Cast::RoleBtnClicked);
+        connect(role,&Role::roleBtnClicked,this,&Cast::roleBtnClicked);
     }
-    connect(ui->fightBtn,&QPushButton::clicked,this,&Cast::FightBtnClicked);
-    connect(ui->backBtn,&QPushButton::clicked,this,&Cast::BackBtnClicked);
+    connect(ui->fightBtn,&QPushButton::clicked,this,&Cast::fightBtnClicked);
+    connect(ui->backBtn,&QPushButton::clicked,this,&Cast::backBtnClicked);
 
 }
 

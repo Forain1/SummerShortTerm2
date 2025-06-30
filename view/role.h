@@ -16,7 +16,7 @@ public:
     ~Role();
 
 signals:
-    void RoleBtnClicked(int i);
+    void roleBtnClicked(int i);
 private:
     int roleNum;
     Ui::Role *ui;
