@@ -11,7 +11,7 @@ class Character : public QObject
 public:
     explicit Character(int x,int y,QObject *parent = nullptr);
     void setCurrentHealth(int delta){currentHealth+=delta;}
-    void setCoordinate(int deltaX,int deltaY){x+=deltaX;y+=deltaY;}
+    void setCoordinate(int deltaX,int deltaY){x+=deltaX;y+=deltaY;emit CoordinateUpdate(x,y);}
     void setSpeed(int deltaX,int deltaY){xSpeed+=deltaX,ySpeed+=deltaY;}
     void setCharacterState(CharacterState *nextState){state=nextState;}
 
@@ -29,6 +29,7 @@ private:
     int currentFrame;//当前状态播放到第几帧
 
 signals:
+    void CoordinateUpdate(int x,int y);
 };
 
 #endif // CHARACTER_H

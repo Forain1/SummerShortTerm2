@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "ui_mainwindow.h"
 #include "controller/scenecontroller.h"
+#include "controller/fightercontroller.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -15,6 +16,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
     friend class SceneController;
+    friend class FighterController;
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
