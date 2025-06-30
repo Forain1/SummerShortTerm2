@@ -20,6 +20,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    Battle* getBattle();
 public slots:
     void SetPage(Index::PageIndex index);
 

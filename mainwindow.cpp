@@ -30,3 +30,7 @@ void MainWindow::SetPage(Index::PageIndex index){
     ui->stackedWidget->currentWidget()->setFocus();
     qDebug() << "Focus now on:" << QApplication::focusWidget();
 }
+
+Battle *MainWindow::getBattle(){
+    return qobject_cast<Battle*>(ui->stackedWidget->widget(Index::BattleIndex));
+}
