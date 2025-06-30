@@ -32,7 +32,7 @@ qt_add_executable(V1
     view/fighter.h view/fighter.cpp
     view/role.h view/role.cpp view/role.ui
     controller/fightercontroller.h controller/fightercontroller.cpp
-
+    view/settlement.h view/settlement.cpp view/settlement.ui
 )
 
 target_link_libraries(V1

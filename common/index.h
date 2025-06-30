@@ -2,7 +2,7 @@
 #define INDEX_H
 namespace Index{
 enum PageIndex{
-    MenuIndex,CastIndex,BattleIndex,SettleIndex
+    MenuIndex,CastIndex,BattleIndex,SettlementIndex
 };
 enum StateIndex{
     IdleState,WalkingState,JumpingState
