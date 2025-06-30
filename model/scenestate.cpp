@@ -3,10 +3,10 @@
 SceneState::SceneState(QObject *parent)
     : QObject{parent}
 {
-    currentPageIndex=PageIndex::MenuIndex;
+    currentPageIndex=Index::MenuIndex;
 }
 
-void SceneState::setCurrentPageIndex(PageIndex::Index index){
+void SceneState::setCurrentPageIndex(Index::PageIndex index){
     if(index!=currentPageIndex){
         currentPageIndex=index;
         emit currentPageIndexChanged(index);

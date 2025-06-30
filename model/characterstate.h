@@ -12,6 +12,7 @@ public:
 
     virtual void updateFrame(const QString &newAction) = 0;//切换至下一帧
     virtual QString getStateName() const = 0;//获取状态名
+    // virtual int getTotalFrame() const = 0;//获取状态动画的总帧数
 private:
     int frame;//记录当前帧数
 signals:
@@ -22,6 +23,7 @@ class IdleState : public CharacterState
     explicit IdleState(QObject *parent=nullptr) : CharacterState(parent){}
     void updateFrame(const QString &newAction) override;
     QString getStateName() const override{return "Idle";}
+    // int getTotalFrame() const override{return 3;}
 };
 
 class WalkingState:public CharacterState
@@ -29,6 +31,7 @@ class WalkingState:public CharacterState
     explicit WalkingState(QObject *parent=nullptr) : CharacterState(parent){}
     void updateFrame(const QString &newAction) override;
     QString getStateName() const override{return "Walking";}
+    // int getTotalFrame() const override{return }
 };
 
 class JumpingState:public CharacterState

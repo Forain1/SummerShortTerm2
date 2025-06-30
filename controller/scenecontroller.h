@@ -2,7 +2,7 @@
 #define SCENECONTROLLER_H
 
 #include <QObject>
-#include "../common/pageindex.h"
+#include "../common/index.h"
 #include "../model/scenestate.h"
 
 class MainWindow;
@@ -18,7 +18,7 @@ private:
     MainWindow *mainWindow;
     SceneState *sceneState;
 signals:
-    void turnToPage(PageIndex::Index index);
+    void turnToPage(Index::PageIndex index);
 };
 
 #endif // SCENECONTROLLER_H
