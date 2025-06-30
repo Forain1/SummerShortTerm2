@@ -11,8 +11,8 @@ class Character : public QObject
 public:
     explicit Character(QObject *parent = nullptr);
     void setCurrentHealth(int delta){currentHealth+=delta;}
-    void setCoordinate(double deltaX,double deltaY){x+=deltaX;y+=deltaY;}
-    void setSpeed(double deltaX,double deltaY){xSpeed+=deltaX,ySpeed+=deltaY;}
+    void setCoordinate(int deltaX,int deltaY){x+=deltaX;y+=deltaY;}
+    void setSpeed(int deltaX,int deltaY){xSpeed+=deltaX,ySpeed+=deltaY;}
 
     int getCurrentHealth(){return currentHealth;}
     int getX(){return x;}
@@ -23,8 +23,8 @@ private:
     int maxHealth;//最大生命值
     int currentHealth;//当前生命值
     CharacterState *state;//角色状态：Idle,Jumping,Falling...
-    double x,y;//角色坐标
-    double xSpeed,ySpeed;
+    int x,y;//角色坐标
+    int xSpeed,ySpeed;
 signals:
 };
 

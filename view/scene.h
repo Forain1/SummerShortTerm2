@@ -14,6 +14,7 @@ protected:
     void paintEvent(QPaintEvent* event);
 private:
     QString bgPath;
+    QPixmap bg;
 };
 
 #endif // SCENE_H

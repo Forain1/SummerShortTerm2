@@ -17,6 +17,8 @@ public:
 
 private:
     Ui::Menu *ui;
+signals:
+    void startBtnClicked();
 };
 
 #endif // MENU_H
