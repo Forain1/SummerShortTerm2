@@ -34,3 +34,31 @@ void Battle::loadBackground(const QString& imagePath)
     bgItem->setPos(0, 0);
     bgItem->setEnabled(false);
 }
+
+void Battle::setCoodinate(int roleNum,int x,int y){
+    if(roleNum==0){
+        fighter0->setPos(x,y);
+    }else{
+        fighter1->setPos(x,y);
+    }
+}
+
+int Battle::getWidth(int num){
+    if(num==0){
+        return fighter0->getWidth();
+    }else if(num==1){
+        return fighter1->getWidth();
+    }else{
+        return 0;
+    }
+}
+
+int Battle::getHeight(int num){
+    if(num==0){
+        return fighter0->getHeight();
+    }else if(num==1){
+        return fighter1->getHeight();
+    }else{
+        return 0;
+    }
+}

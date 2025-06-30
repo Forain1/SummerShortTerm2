@@ -25,4 +25,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::SetPage(Index::PageIndex index){
     ui->stackedWidget->setCurrentIndex(index);
+    ui->stackedWidget->currentWidget()->setFocus();
+    qDebug() << "Focus now on:" << QApplication::focusWidget();
 }

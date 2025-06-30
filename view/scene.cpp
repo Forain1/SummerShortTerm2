@@ -11,7 +11,7 @@ Scene::Scene(QWidget *parent,QString path)
 void Scene::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     if (!bg.isNull()) {
-        qDebug() << "Scene size:" << this->size();
+      //  qDebug() << "Scene size:" << this->size();
         QSize widgetSize = this->size();
         // 让背景图填满整个窗口，不保持比例（可改为 KeepAspectRatioByExpanding ）
         bg = bg.scaled(widgetSize,Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);

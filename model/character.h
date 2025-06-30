@@ -9,7 +9,7 @@ class Character : public QObject
 {
     Q_OBJECT
 public:
-    explicit Character(QObject *parent = nullptr);
+    explicit Character(int x,int y,QObject *parent = nullptr);
     void setCurrentHealth(int delta){currentHealth+=delta;}
     void setCoordinate(int deltaX,int deltaY){x+=deltaX;y+=deltaY;}
     void setSpeed(int deltaX,int deltaY){xSpeed+=deltaX,ySpeed+=deltaY;}

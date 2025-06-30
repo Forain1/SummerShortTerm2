@@ -5,6 +5,7 @@ find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Core)
 
 qt_standard_project_setup()
 
@@ -30,6 +31,7 @@ qt_add_executable(V1
     view/battle.h view/battle.cpp
     view/fighter.h view/fighter.cpp
     view/role.h view/role.cpp view/role.ui
+    controller/fightercontroller.h controller/fightercontroller.cpp
 
 )
 
@@ -40,6 +42,7 @@ target_link_libraries(V1
 )
 
 target_link_libraries(V1 PRIVATE Qt6::Widgets)
+target_link_libraries(V1 PRIVATE Qt6::Core)
 target_link_libraries(V1 PRIVATE Qt6::Core)
 target_link_libraries(V1 PRIVATE Qt6::Core)
 
