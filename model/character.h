@@ -25,6 +25,8 @@ private:
     CharacterState *state;//角色状态：Idle,Jumping,Falling...
     int x,y;//角色坐标
     int xSpeed,ySpeed;
+    int currentFrame;
+
 signals:
 };
 

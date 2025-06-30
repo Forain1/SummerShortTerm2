@@ -17,11 +17,11 @@ Fighter::Fighter(QGraphicsItem* parent,int roleNum,bool left):QGraphicsObject(pa
 
         }
     }
-    if (!frames[idle].isEmpty()) {
-        timer.setInterval(100); // 每100ms切换一帧，可调节速度
-        connect(&timer, &QTimer::timeout, this, &Fighter::nextFrame);
-        timer.start();
-    }
+    // if (!frames[idle].isEmpty()) {
+    //     timer.setInterval(100); // 每100ms切换一帧，可调节速度
+    //     connect(&timer, &QTimer::timeout, this, &Fighter::nextFrame);
+    //     timer.start();
+    // }
 
 }
 

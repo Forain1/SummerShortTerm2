@@ -22,15 +22,15 @@ qt_add_executable(V1
     view/menu.h view/menu.cpp view/menu.ui
     src.qrc
     view/cast.h view/cast.cpp view/cast.ui
-
     model/character.h model/character.cpp
     model/characterstate.h model/characterstate.cpp
     controller/scenecontroller.h controller/scenecontroller.cpp
     model/scenestate.h model/scenestate.cpp
-    common/pageindex.h
+    common/index.h
     view/battle.h view/battle.cpp
     view/fighter.h view/fighter.cpp
     view/role.h view/role.cpp view/role.ui
+
 )
 
 target_link_libraries(V1

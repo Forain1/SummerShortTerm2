@@ -19,7 +19,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 public slots:
-    void SetPage(PageIndex::Index index);
+    void SetPage(Index::PageIndex index);
 
 private:
     Ui::MainWindow *ui;

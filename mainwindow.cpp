@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include "view/menu.h"
 #include "view/cast.h"
-#include "common/pageindex.h"
+#include "common/index.h"
 #include "view/battle.h"
 #include <QResizeEvent>
 
@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->stackedWidget->addWidget(new  Menu(this,":/src/bg0.jpg"));
     ui->stackedWidget->addWidget(new  Cast(this,":/src/bg0.jpg"));
     ui->stackedWidget->addWidget(new  Battle(this,":/src/bg0.jpg"));
-    ui->stackedWidget->setCurrentIndex(PageIndex::MenuIndex);
+    ui->stackedWidget->setCurrentIndex(Index::MenuIndex);
 }
 
 MainWindow::~MainWindow()
@@ -23,6 +23,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::SetPage(PageIndex::Index index){
+void MainWindow::SetPage(Index::PageIndex index){
     ui->stackedWidget->setCurrentIndex(index);
 }
