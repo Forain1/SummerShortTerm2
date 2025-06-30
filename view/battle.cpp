@@ -11,6 +11,13 @@ Battle::Battle(QWidget* parent,QString path,int role0Num,int role1Num):QGraphics
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     loadBackground(path);
     //生成对应模型的角色
+    fighter0 = new Fighter(nullptr,role0Num);
+    fighter1 = new Fighter(nullptr,role1Num,false);
+    //添加进入场景 并设置在场景的坐标位置
+    scene->addItem(fighter0);
+    fighter0->setPos(20,900-fighter0->getHeight());
+    scene->addItem(fighter1);
+    fighter1->setPos(1600-20-fighter1->getWidth(),900-fighter1->getHeight());
 }
 
 Battle::~Battle(){}

@@ -15,7 +15,9 @@ private:
     void loadBackground(const QString& path);
     QGraphicsScene* scene;
     QGraphicsPixmapItem* bgItem;
-    Fighter* fighter0,fighter1;
+    Fighter* fighter0,*fighter1;
+
+
 };
 
 #endif // BATTLE_H

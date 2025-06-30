@@ -1,21 +1,47 @@
 #include"fighter.h"
+#include<QPainter>
 
-Fighter::Fighter(QGraphicsItem* parent,int roleNum):QGraphicsObject(parent) {
+
+Fighter::Fighter(QGraphicsItem* parent,int roleNum,bool left):QGraphicsObject(parent) {
     if(roleNum==0){
+        frames.resize(3);
+        qDebug()<<"loading image";
         for(int i = 0 ;i < 6; i++){
             QPixmap pix;
-            QString path = ":/src/image" + QString::number(i) +".jpg";
+            QString path = ":/src/image" + QString::number(i) +".png";
             pix.load(path);
-            idleFrames.append(pix);
+            if(!pix.isNull()){
+                frames[idle].append(pix);
+              qDebug()<<"success:"<<i;
+            }
+
         }
     }
-    if (!idleFrames.isEmpty()) {
+    if (!frames[idle].isEmpty()) {
         timer.setInterval(100); // 每100ms切换一帧，可调节速度
         connect(&timer, &QTimer::timeout, this, &Fighter::nextFrame);
         timer.start();
     }
+
 }
 
 void Fighter::nextFrame(){
-    ++currentFrame %= idleFrames.size();
+    ++currentFrame %= frames[currentState].size();
+    update();
+}
+
+QRectF Fighter::boundingRect() const{
+    return QRectF(0,0,frames[currentState][currentFrame].width(),frames[currentState][currentFrame].height());
+}
+
+void Fighter::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
+    painter->drawPixmap(0,0,frames[currentState][currentFrame]);
+}
+
+int Fighter::getWidth()const{
+    return frames[currentState][currentFrame].width();
+}
+
+int Fighter::getHeight()const{
+    return frames[currentState][currentFrame].height();
 }
