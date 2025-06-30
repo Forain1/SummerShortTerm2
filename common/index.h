@@ -5,7 +5,7 @@ enum PageIndex{
     MenuIndex,CastIndex,BattleIndex,SettlementIndex
 };
 enum StateIndex{
-    IdleState,WalkingState,JumpingState
+    IdleState,WalkingState,JumpingState,FallingState,AttackingState,DefendingState,StunnedState
 };
 }
 #endif // INDEX_H

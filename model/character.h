@@ -2,7 +2,7 @@
 #define CHARACTER_H
 
 #include <QObject>
-
+#include "../common/index.h"
 class CharacterState;
 
 class Character : public QObject
@@ -16,6 +16,7 @@ public:
     void setCharacterState(CharacterState *nextState){state=nextState;}
 
     int getCurrentHealth(){return currentHealth;}
+    CharacterState *getState(){return state;};
     int getX(){return x;}
     int getY(){return y;}
     int getSpeedX(){return xSpeed;}
@@ -26,10 +27,13 @@ private:
     CharacterState *state;//角色状态：Idle,Jumping,Falling...
     int x,y;//角色坐标
     int xSpeed,ySpeed;//x,y方向速度
-    int currentFrame;//当前状态播放到第几帧
 
 signals:
     void CoordinateUpdate(int x,int y);
+    void frameUpdate(Index::StateIndex stateIndex,int frame);
+
+public slots:
+    void nextFrame();
 };
 
 #endif // CHARACTER_H

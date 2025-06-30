@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "character.h"
+#include "../common/index.h"
 
 class CharacterState : public QObject
 {
@@ -11,62 +12,74 @@ public:
     explicit CharacterState(QObject *parent = nullptr);
     virtual ~CharacterState() = default;
 
-    virtual void updateFrame(const QString &newAction,Character *parent) = 0;//切换至下一帧
-    virtual QString getStateName() const = 0;//获取状态名
-    // virtual int getTotalFrame() const = 0;//获取状态动画的总帧数
-private:
-    int frame;//记录当前帧数
+    virtual void updateFrame(Character *parent) = 0;//切换至下一帧
+    virtual Index::StateIndex getStateIndex() const = 0;//获取状态名
+    virtual int getMaxFrame() const = 0;//获取状态动画的总帧数
+protected:
+    int currentFrame=0;//记录当前帧数
 signals:
 };
 
 class IdleState : public CharacterState
 {
+public:
     explicit IdleState(QObject *parent=nullptr) : CharacterState(parent){}
-    void updateFrame(const QString &newAction,Character *parent) override;
-    QString getStateName() const override{return "Idle";}
-    // int getTotalFrame() const override{return 3;}
+    void updateFrame(Character *parent) override;
+    Index::StateIndex getStateIndex() const override{return Index::IdleState;}
+    int getMaxFrame() const override{return 5;}
 };
 
 class WalkingState:public CharacterState
 {
+public:
     explicit WalkingState(QObject *parent=nullptr) : CharacterState(parent){}
-    void updateFrame(const QString &newAction,Character *parent) override;
-    QString getStateName() const override{return "Walking";}
-    // int getTotalFrame() const override{return }
+    void updateFrame(Character *parent) override;
+    Index::StateIndex getStateIndex() const override{return Index::WalkingState;}
+    int getMaxFrame() const override{return 6;}
 };
 
 class JumpingState:public CharacterState
 {
+public:
     explicit JumpingState(QObject *parent=nullptr) : CharacterState(parent){}
-    void updateFrame(const QString &newAction,Character *parent) override;
-    QString getStateName() const override{return "Jumping";}
+    void updateFrame(Character *parent) override;
+    Index::StateIndex getStateIndex() const override{return Index::JumpingState;}
+    int getMaxFrame() const override{return 6;}
 };
 
 class FallingState:public CharacterState
 {
+public:
     explicit FallingState(QObject *parent=nullptr) : CharacterState(parent){}
-    void updateFrame(const QString &newAction,Character *parent) override;
-    QString getStateName() const override{return "Falling";}
+    void updateFrame(Character *parent) override;
+    Index::StateIndex getStateIndex() const override{return Index::FallingState;}
+    int getMaxFrame() const override{return 6;}
 };
 
 class AttackingState:public CharacterState
 {
+public:
     explicit AttackingState(QObject *parent=nullptr) : CharacterState(parent){}
-    void updateFrame(const QString &newAction,Character *parent) override;
-    QString getStateName() const override{return "Attacking";}
+    void updateFrame(Character *parent) override;
+    Index::StateIndex getStateIndex() const override{return Index::AttackingState;}
+    int getMaxFrame() const override{return 6;}
 };
 
 class DefendingState:public CharacterState
 {
+public:
     explicit DefendingState(QObject *parent=nullptr) : CharacterState(parent){}
-    void updateFrame(const QString &newAction,Character *parent) override;
-    QString getStateName() const override{return "Defending";}
+    void updateFrame(Character *parent) override;
+    Index::StateIndex getStateIndex() const override{return Index::DefendingState;}
+    int getMaxFrame() const override{return 6;}
 };
 
 class StunnedState:public CharacterState
 {
+public:
     explicit StunnedState(QObject *parent=nullptr) : CharacterState(parent){}
-    void updateFrame(const QString &newAction,Character *parent) override;
-    QString getStateName() const override{return "Stunned";}
+    void updateFrame(Character *parent) override;
+    Index::StateIndex getStateIndex() const override{return Index::StunnedState;}
+    int getMaxFrame() const override{return 6;}
 };
 #endif // CHARACTERSTATE_H

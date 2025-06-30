@@ -11,7 +11,7 @@ Fighter::Fighter(QGraphicsItem* parent,int roleNum,bool left):QGraphicsObject(pa
             QString path = ":/src/image" + QString::number(i) +".png";
             pix.load(path);
             if(!pix.isNull()){
-                frames[idle].append(pix);
+                frames[Index::IdleState].append(pix);
               qDebug()<<"success:"<<i;
             }
 
@@ -25,7 +25,7 @@ Fighter::Fighter(QGraphicsItem* parent,int roleNum,bool left):QGraphicsObject(pa
 
 }
 
-void Fighter::nextFrame(int state , int frame){
+void Fighter::nextFrame(Index::StateIndex state , int frame){
     currentState = state;
     currentFrame = frame;
     update();

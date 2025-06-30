@@ -13,12 +13,11 @@ public:
 protected:
     bool eventFilter(QObject* obj,QEvent* event);
 private:
-    QTimer timer;
+    QTimer *timer;
     Battle* battle;
     Character *c0,*c1;
     void pressKeyA();
     void pressKeyD();
-
 };
 
 #endif // FIGHTERCONTROLLER_H
