@@ -13,8 +13,7 @@ public:
     int getWidth() const;
     int getHeight() const;
 public slots:
-    void nextFrame();
-
+    void nextFrame(int state,int frame);//state表示要播放哪个数组的动画,frame表示是该动画的第几帧
 private:
     enum state{
         idle,move,jump

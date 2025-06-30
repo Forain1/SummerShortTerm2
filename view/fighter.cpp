@@ -25,8 +25,9 @@ Fighter::Fighter(QGraphicsItem* parent,int roleNum,bool left):QGraphicsObject(pa
 
 }
 
-void Fighter::nextFrame(){
-    ++currentFrame %= frames[currentState].size();
+void Fighter::nextFrame(int state , int frame){
+    currentState = state;
+    currentFrame = frame;
     update();
 }
 
