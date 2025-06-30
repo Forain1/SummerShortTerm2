@@ -4,7 +4,7 @@
 Scene::Scene(QWidget *parent,QString path)
     : QWidget{parent},bgPath(path)
 {
-    bg=QPixmap(bgPath);
+      bg = QPixmap(bgPath);
 }
 
 
@@ -20,4 +20,6 @@ void Scene::paintEvent(QPaintEvent *event) {
     // 继续执行基类的 paintEvent
     QWidget::paintEvent(event);
 }
+
+
 

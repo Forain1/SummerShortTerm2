@@ -14,7 +14,7 @@ public:
 
     bool isMenu(){return currentPageIndex==PageIndex::MenuIndex;}
     bool isCast(){return currentPageIndex==PageIndex::CastIndex;}
-    bool isFight(){return currentPageIndex==PageIndex::FightIndex;}
+    bool isFight(){return currentPageIndex==PageIndex::BattleIndex;}
     bool isSettle(){return currentPageIndex==PageIndex::SettleIndex;}
 private:
     PageIndex::Index currentPageIndex;

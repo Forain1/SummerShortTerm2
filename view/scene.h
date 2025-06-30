@@ -2,6 +2,7 @@
 #define SCENE_H
 
 #include <QWidget>
+#include <QPixmap>
 
 class Scene : public QWidget
 {

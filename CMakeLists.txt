@@ -28,6 +28,8 @@ qt_add_executable(V1
     controller/scenecontroller.h controller/scenecontroller.cpp
     model/scenestate.h model/scenestate.cpp
     common/pageindex.h
+    view/battle.h view/battle.cpp
+    view/fighter.h view/fighter.cpp
 )
 
 target_link_libraries(V1

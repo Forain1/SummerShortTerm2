@@ -2,7 +2,7 @@
 #define PAGEINDEX_H
 namespace PageIndex{
 enum Index{
-    MenuIndex,CastIndex,FightIndex,SettleIndex
+    MenuIndex,CastIndex,BattleIndex,SettleIndex
 };
 }
 #endif // PAGEINDEX_H
