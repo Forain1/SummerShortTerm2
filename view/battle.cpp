@@ -1,12 +1,20 @@
 #include "battle.h"
 #include <QGraphicsScene>
 #include <QScrollBar>
+#include <QGraphicsRectItem>
+#define BATTLEWIDTH 1586
+#define BATTLEHEIGHT 886
 Battle::Battle(QWidget* parent,QString path,int role0Num,int role1Num):QGraphicsView(parent) {
+
+    //设置view的大小
+    this->setFixedSize(BATTLEWIDTH,BATTLEHEIGHT);
+    //设置scene的大小
     scene = new QGraphicsScene(this);
-    scene->setSceneRect(0,0,1600,900);
+    scene->setSceneRect(0,0,BATTLEWIDTH,BATTLEHEIGHT);
     setScene(scene);
     setRenderHint(QPainter::Antialiasing);
     // 禁止活动栏的出现
+    setViewportMargins(0, 0, 0, 0);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     loadBackground(path);
@@ -15,12 +23,13 @@ Battle::Battle(QWidget* parent,QString path,int role0Num,int role1Num):QGraphics
     fighter1 = new Fighter(nullptr,role1Num,false);
     //添加进入场景 并设置在场景的坐标位置
     scene->addItem(fighter0);
-    fighter0->setPos(20,900-fighter0->getHeight());
+    fighter0->setPos(20,BATTLEHEIGHT-fighter0->getHeight());
     scene->addItem(fighter1);
-    fighter1->setPos(1600-20-fighter1->getWidth(),900-fighter1->getHeight());
+    fighter1->setPos(BATTLEWIDTH-20-fighter1->getWidth(),BATTLEHEIGHT-fighter1->getHeight());
 
     //由于view大于所提供的窗口 在这里把窗口拉到最下方
     this->verticalScrollBar()->setValue(this->verticalScrollBar()->maximum());
+    this->horizontalScrollBar()->setValue(this->horizontalScrollBar()->minimum());
 }
 
 Battle::~Battle(){}

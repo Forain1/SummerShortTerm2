@@ -27,7 +27,7 @@ private:
     int currentHealth;//当前生命值
     CharacterState *state;//角色状态：Idle,Jumping,Falling...
     int x,y;//角色坐标
-    int xSpeed,ySpeed;//x,y方向速度
+    int xSpeed=0,ySpeed=0;//x,y方向速度
     enum direction{
         left,right
     };

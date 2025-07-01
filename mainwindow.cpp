@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     setFixedSize(1600,900);
     ui->stackedWidget->addWidget(new  Menu(this,":/src/bg0.jpg"));
     ui->stackedWidget->addWidget(new  Cast(this,":/src/bg0.jpg"));
+    //Battle需要额外添加一个布局让他撑满整个页面
     ui->stackedWidget->addWidget(new  Battle(this,":/src/bg0.jpg"));
     ui->stackedWidget->addWidget(new Settlement(this));
     ui->stackedWidget->setCurrentIndex(Index::MenuIndex);

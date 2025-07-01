@@ -20,6 +20,11 @@ FighterController::FighterController(Battle* battle,QObject *parent)
     connect(c0,&Character::frameUpdate,battle->fighter0,&Fighter::nextFrame);
     connect(c1,&Character::frameUpdate,battle->fighter1,&Fighter::nextFrame);
     timer->start();
+    //
+    qDebug() << "View size:" << battle->size();
+    qDebug() << "Viewport size:" <<  battle->viewport()->size();
+    qDebug() << "Scene rect:" <<  battle->sceneRect();
+    qDebug() << "Visible scene area:" <<  battle->mapToScene( battle->viewport()->rect()).boundingRect();
 }
 
 bool FighterController::eventFilter(QObject* obj, QEvent* event) {
@@ -46,6 +51,7 @@ bool FighterController::eventFilter(QObject* obj, QEvent* event) {
         QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
         switch (keyEvent->key()) {
         case Qt::Key_A:
+
         case Qt::Key_D:
             c0->setXSpeed(0);
             break;
@@ -77,7 +83,7 @@ void FighterController::pressKeyD(){
 
 void FighterController::pressKeyLeft(){
     if(true){
-        c1->setXSpeed(-5);
+        c1->setXSpeed(-100);
     }
 }
 
