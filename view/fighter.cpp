@@ -4,14 +4,19 @@
 
 Fighter::Fighter(QGraphicsItem* parent,int roleNum,bool left):QGraphicsObject(parent) {
     if(roleNum==0){
-        frames.resize(3);
+        frames.resize(6);
         qDebug()<<"loading image";
         for(int i = 0 ;i < 6; i++){
             QPixmap pix;
             QString path = ":/src/image" + QString::number(i) +".png";
             pix.load(path);
             if(!pix.isNull()){
+                frames[Index::WalkingState].append(pix);
                 frames[Index::IdleState].append(pix);
+                frames[Index::JumpingState].append(pix);
+                frames[Index::DefendingState].append(pix);
+                frames[Index::AttackingState].append(pix);
+                frames[Index::FallingState].append(pix);
               qDebug()<<"success:"<<i;
             }
 

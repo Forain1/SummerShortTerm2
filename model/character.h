@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "../common/index.h"
+#define groundY 400;
 class CharacterState;
 
 class Character : public QObject
@@ -22,6 +23,18 @@ public:
     int getY(){return y;}
     int getSpeedX(){return xSpeed;}
     int getSpeedY(){return ySpeed;}
+
+    bool isOnGround(){return y>=groundY;}
+
+    //可以由键盘输入决定的状态转换
+    //idle,walk->jump
+    void switchToJumpingState();
+    //idle->walk
+    void switchToWalkingState(int vx);
+    //idle,walk->defend
+    void switchToDefendingState();
+    //idle,walk->attack
+    void switchToAttackingState();
 private:
     int maxHealth;//最大生命值
     int currentHealth;//当前生命值

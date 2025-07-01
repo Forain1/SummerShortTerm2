@@ -37,6 +37,12 @@ bool FighterController::eventFilter(QObject* obj, QEvent* event) {
         case Qt::Key_D:
             pressKeyD();
             break;
+        case Qt::Key_S:
+            pressKeyS();
+            break;
+        case Qt::Key_W:
+            pressKeyW();
+            break;
         case Qt::Key_Left:
             pressKeyLeft();
             break;
@@ -71,24 +77,40 @@ bool FighterController::eventFilter(QObject* obj, QEvent* event) {
 
 void FighterController::pressKeyA(){
     if(true){//需要在这里检测碰撞
-        c0->setXSpeed(-5);
+        c0->switchToWalkingState(-10);
     }
 }
 
 void FighterController::pressKeyD(){
     if(true){//需要检测碰撞
-        c0->setXSpeed(5);
+        c0->switchToWalkingState(10);
     }
+}
+
+void FighterController::pressKeyW(){
+    c0->switchToJumpingState();
+}
+
+void FighterController::pressKeyS(){
+    c0->switchToDefendingState();
 }
 
 void FighterController::pressKeyLeft(){
     if(true){
-        c1->setXSpeed(-100);
+        c1->switchToWalkingState(-10);
     }
 }
 
 void FighterController::pressKeyRight(){
     if(true){
-        c1->setXSpeed(5);
+        c1->switchToWalkingState(10);
     }
+}
+
+void FighterController::pressKeyUp(){
+    c1->switchToJumpingState();
+}
+
+void FighterController::pressKeyDown(){
+    c1->switchToDefendingState();
 }

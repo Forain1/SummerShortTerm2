@@ -18,8 +18,13 @@ private:
     Character *c0,*c1;
     void pressKeyA();
     void pressKeyD();
+    void pressKeyS();
+    void pressKeyW();
     void pressKeyLeft();
     void pressKeyRight();
+    void pressKeyUp();
+    void pressKeyDown();
+
 };
 
 #endif // FIGHTERCONTROLLER_H

@@ -36,7 +36,7 @@ public:
     explicit WalkingState(QObject *parent=nullptr) : CharacterState(parent){}
     void updateFrame(Character *parent) override;
     Index::StateIndex getStateIndex() const override{return Index::WalkingState;}
-    int getMaxFrame() const override{return 6;}
+    int getMaxFrame() const override{return 0;}
 };
 
 class JumpingState:public CharacterState
@@ -45,7 +45,7 @@ public:
     explicit JumpingState(QObject *parent=nullptr) : CharacterState(parent){}
     void updateFrame(Character *parent) override;
     Index::StateIndex getStateIndex() const override{return Index::JumpingState;}
-    int getMaxFrame() const override{return 6;}
+    int getMaxFrame() const override{return 0;}
 };
 
 class FallingState:public CharacterState
@@ -54,7 +54,7 @@ public:
     explicit FallingState(QObject *parent=nullptr) : CharacterState(parent){}
     void updateFrame(Character *parent) override;
     Index::StateIndex getStateIndex() const override{return Index::FallingState;}
-    int getMaxFrame() const override{return 6;}
+    int getMaxFrame() const override{return 0;}
 };
 
 class AttackingState:public CharacterState
@@ -63,7 +63,7 @@ public:
     explicit AttackingState(QObject *parent=nullptr) : CharacterState(parent){}
     void updateFrame(Character *parent) override;
     Index::StateIndex getStateIndex() const override{return Index::AttackingState;}
-    int getMaxFrame() const override{return 6;}
+    int getMaxFrame() const override{return 0;}
 };
 
 class DefendingState:public CharacterState
@@ -72,7 +72,7 @@ public:
     explicit DefendingState(QObject *parent=nullptr) : CharacterState(parent){}
     void updateFrame(Character *parent) override;
     Index::StateIndex getStateIndex() const override{return Index::DefendingState;}
-    int getMaxFrame() const override{return 6;}
+    int getMaxFrame() const override{return 0;}
 };
 
 class StunnedState:public CharacterState
@@ -81,6 +81,6 @@ public:
     explicit StunnedState(QObject *parent=nullptr) : CharacterState(parent){}
     void updateFrame(Character *parent) override;
     Index::StateIndex getStateIndex() const override{return Index::StunnedState;}
-    int getMaxFrame() const override{return 6;}
+    int getMaxFrame() const override{return 0;}
 };
 #endif // CHARACTERSTATE_H
