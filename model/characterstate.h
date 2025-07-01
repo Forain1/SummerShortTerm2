@@ -18,7 +18,6 @@ public:
     virtual int getMaxFrame() const = 0;//获取状态动画的总帧数
 protected:
     int currentFrame=0;//记录当前帧数
-signals:
 };
 
 class IdleState : public CharacterState

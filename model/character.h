@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include "../common/index.h"
-#define groundY 400;
 class CharacterState;
 
 class Character : public QObject
@@ -35,7 +34,7 @@ public:
     void switchToDefendingState();
     //idle,walk->attack
     void switchToAttackingState();
-    //walk->idle
+    //walk,defend->idle
     void switchToIdleState();
 private:
     int maxHealth;//最大生命值
@@ -46,7 +45,29 @@ private:
     enum direction{
         left,right
     };
+    int groundY;
     direction characterDir;
+    bool aPressed = false;
+    bool dPressed = false;
+    bool leftPressed = false;
+    bool rightPressed = false;
+
+public slots:
+    void handlePressKeyA();
+    void handlePressKeyD();
+    void handlePressKeyS();
+    void handlePressKeyW();
+    void handlePressKeyLeft();
+    void handlePressKeyRight();
+    void handlePressKeyUp();
+    void handlePressKeyDown();
+    void handleReleaseKeyA();
+    void handleReleaseKeyD();
+    void handleReleaseKeyS();
+    void handleReleaseKeyLeft();
+    void handleReleaseKeyRight();
+    void handleReleaseKeyDown();
+
 
 signals:
     void frameUpdate(Index::StateIndex stateIndex,int frame,int x,int y);

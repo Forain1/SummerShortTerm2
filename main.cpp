@@ -1,13 +1,10 @@
 #include "mainwindow.h"
-
+#include "app/app.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    SceneController sceneController{&w};
-    FighterController fightController(w.getBattle());
-    w.show();
+    App app;
     return a.exec();
 }

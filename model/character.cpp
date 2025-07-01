@@ -4,8 +4,8 @@
 Character::Character(int x,int y,QObject *parent)
     : QObject{parent},maxHealth{100},currentHealth{100},x(x),y(y)
 {
-   state=new IdleState(this);
-
+    state=new IdleState(this);
+    groundY=y;
 }
 
 void Character::setCharacterState(CharacterState *nextState){
@@ -16,7 +16,6 @@ void Character::setCharacterState(CharacterState *nextState){
 
 void Character::nextFrame(){
     qDebug()<<"xspeed:"<<xSpeed<<"state"<<state->getStateIndex();
-    if(state->getStateIndex()==Index::WalkingState&&xSpeed==0)switchToIdleState();
     x+=xSpeed;
     y+=ySpeed;
     if(!isOnGround()){
@@ -63,6 +62,116 @@ void Character::switchToDefendingState(){
 }
 
 void Character::switchToIdleState(){
-    delete state;
-    state = new IdleState(this);
+    if(state->getStateIndex()==Index::WalkingState||state->getStateIndex()==Index::DefendingState){
+        setCharacterState(new IdleState(this));
+        xSpeed=0;
+    }
+}
+
+void Character::handlePressKeyA(){
+    if(!aPressed){
+        aPressed=true;
+        if(getState()->getStateIndex()==Index::JumpingState||getState()->getStateIndex()==Index::FallingState){
+            setXSpeed(-10);
+        }
+        else if(true){//需要在这里检测碰撞
+            switchToWalkingState(-10);
+        }
+    }
+}
+
+void Character::handlePressKeyD(){
+    if(!dPressed){
+        dPressed=true;
+        if(getState()->getStateIndex()==Index::JumpingState||getState()->getStateIndex()==Index::FallingState){
+            setXSpeed(10);
+        }
+        else if(true){//需要检测碰撞
+            switchToWalkingState(10);
+        }
+    }
+}
+
+void Character::handlePressKeyW(){
+    switchToJumpingState();
+}
+
+void Character::handlePressKeyS(){
+    switchToDefendingState();
+}
+
+void Character::handlePressKeyLeft(){
+    if(!leftPressed){
+        leftPressed=true;
+        if(getState()->getStateIndex()==Index::JumpingState||getState()->getStateIndex()==Index::FallingState){
+            setXSpeed(-10);
+        }
+        else if(true){
+            switchToWalkingState(-10);
+        }
+    }
+}
+
+void Character::handlePressKeyRight(){
+    if(!rightPressed){
+        rightPressed=true;
+        if(getState()->getStateIndex()==Index::JumpingState||getState()->getStateIndex()==Index::FallingState){
+            setXSpeed(10);
+        }
+        if(true){
+            switchToWalkingState(10);
+        }
+    }
+}
+
+void Character::handlePressKeyUp(){
+    switchToJumpingState();
+}
+
+void Character::handlePressKeyDown(){
+    switchToDefendingState();
+}
+
+void Character::handleReleaseKeyA(){
+    aPressed = false;
+    setXSpeed(0);
+    if (getState()->getStateIndex() == Index::WalkingState) {
+        setCharacterState(new IdleState());
+    }
+}
+
+void Character::handleReleaseKeyD(){
+    dPressed = false;
+    setXSpeed(0);
+    if (getState()->getStateIndex() == Index::WalkingState) {
+        setCharacterState(new IdleState());
+    }
+}
+
+void Character::handleReleaseKeyS(){
+    if(getState()->getStateIndex()==Index::DefendingState){
+        setCharacterState(new IdleState());
+    }
+}
+
+void Character::handleReleaseKeyLeft(){
+    leftPressed = false;
+    setXSpeed(0);
+    if (getState()->getStateIndex() == Index::WalkingState) {
+        setCharacterState(new IdleState());
+    }
+}
+
+void Character::handleReleaseKeyRight(){
+    rightPressed = false;
+    setXSpeed(0);
+    if (getState()->getStateIndex() == Index::WalkingState) {
+        setCharacterState(new IdleState());
+    }
+}
+
+void Character::handleReleaseKeyDown(){
+    if(getState()->getStateIndex()==Index::DefendingState){
+        setCharacterState(new IdleState());
+    }
 }
