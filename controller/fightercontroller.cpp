@@ -1,4 +1,5 @@
 #include "fightercontroller.h"
+#include "../common/index.h"
 #include<QEvent>
 #include<QKeyEvent>
 #include "../model/characterstate.h"
@@ -8,8 +9,8 @@ FighterController::FighterController(Battle* battle,QObject *parent)
     battle->installEventFilter(this);
 
     //新建两个model绑定对应的view
-    c0 = new Character(20,900-battle->getHeight(0),this);
-    c1 = new Character(1600-20-battle->getWidth(1),900-battle->getHeight(1),this);
+    c0 = new Character(20,BATTLEHEIGHT-battle->getHeight(0),this);
+    c1 = new Character(BATTLEWIDTH-20-battle->getWidth(1),BATTLEHEIGHT-battle->getHeight(1),this);
 
     //计时器逻辑
     timer=new QTimer(this);

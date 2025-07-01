@@ -1,7 +1,7 @@
 #ifndef INDEX_H
 #define INDEX_H
-#define BATTLEWIDTH 1586
-#define BATTLEHEIGHT 886
+#define BATTLEWIDTH 1600
+#define BATTLEHEIGHT 900
 namespace Index{
 enum PageIndex{
     MenuIndex,CastIndex,BattleIndex,SettlementIndex
