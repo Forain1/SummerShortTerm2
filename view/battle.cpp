@@ -38,14 +38,6 @@ void Battle::loadBackground(const QString& imagePath)
     bgItem->setEnabled(false);
 }
 
-void Battle::setCoodinate(int roleNum,int x,int y){
-    if(roleNum==0){
-        fighter0->setPos(x,y);
-    }else{
-        fighter1->setPos(x,y);
-    }
-}
-
 int Battle::getWidth(int num){
     if(num==0){
         return fighter0->getWidth();

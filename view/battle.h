@@ -15,8 +15,6 @@ public:
     //返回num指向的角色的长宽
     int getWidth(int num);
     int getHeight(int num);
-public slots:
-    void setCoodinate(int roleNum,int x,int y);
 private:
     void loadBackground(const QString& path);
     QGraphicsScene* scene;
