@@ -1,6 +1,6 @@
 #include "character.h"
 #include "characterstate.h"
-
+#include <QDebug>
 Character::Character(int x,int y,QObject *parent)
     : QObject{parent},maxHealth{100},currentHealth{100},x(x),y(y)
 {
@@ -9,6 +9,8 @@ Character::Character(int x,int y,QObject *parent)
 }
 
 void Character::nextFrame(){
+    qDebug()<<"xspeed:"<<xSpeed<<"state"<<state->getStateIndex();
+    if(state->getStateIndex()==Index::WalkingState&&xSpeed==0)switchToIdleState();
     x+=xSpeed;
     y+=ySpeed;
     if(!isOnGround()){
@@ -17,8 +19,8 @@ void Character::nextFrame(){
         ySpeed=0;
         y=groundY;
     }
-    state->updateFrame(this);
-    emit frameUpdate(state->getStateIndex(),state->getCurrentFrame(),x,y);
+    state->updateFrame(this);//更新当前状态的帧页面
+    emit frameUpdate(state->getStateIndex(),state->getCurrentFrame(),x,y);//发送信号给fighter.让其改变动画
 }
 
 void Character::switchToJumpingState(){
@@ -56,4 +58,9 @@ void Character::switchToDefendingState(){
         delete state;
         state=new DefendingState(this);
     }
+}
+
+void Character::switchToIdleState(){
+    delete state;
+    state = new IdleState(this);
 }

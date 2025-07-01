@@ -2,6 +2,7 @@
 #include <QGraphicsScene>
 #include <QScrollBar>
 #include <QGraphicsRectItem>
+#include <QKeyEvent>
 
 Battle::Battle(QWidget* parent,QString path,int role0Num,int role1Num):QGraphicsView(parent) {
 
@@ -63,5 +64,73 @@ int Battle::getHeight(int num){
         return fighter1->getHeight();
     }else{
         return 0;
+    }
+}
+
+void Battle::keyPressEvent(QKeyEvent* event){
+    if(event->isAutoRepeat())return;
+    auto key = event->key();
+    switch (key) {
+    case Qt::Key_A:
+        emit pressKeyA();
+        break;
+    case Qt::Key_D:
+        emit pressKeyD();
+        break;
+    case Qt::Key_S:
+        emit pressKeyS();
+        break;
+    case Qt::Key_W:
+        emit pressKeyW();
+        break;
+    case Qt::Key_Right:
+        emit pressKeyRight();
+        break;
+    case Qt::Key_Left:
+        emit pressKeyLeft();
+        break;
+    case Qt::Key_Down:
+        emit pressKeyDown();
+        break;
+    case Qt::Key_Up:
+        emit pressKeyUp();
+        break;
+    default:
+        QGraphicsView::keyPressEvent(event);
+        break;
+    }
+}
+
+void Battle::keyReleaseEvent(QKeyEvent* event){
+    if(event->isAutoRepeat())return;
+    auto key = event->key();
+    switch (key) {
+    case Qt::Key_A:
+        emit releaseKeyA();
+        break;
+    case Qt::Key_D:
+        emit releaseKeyD();
+        break;
+    case Qt::Key_S:
+        emit releaseKeyS();
+        break;
+    case Qt::Key_W:
+        emit releaseKeyW();
+        break;
+    case Qt::Key_Right:
+        emit releaseKeyRight();
+        break;
+    case Qt::Key_Left:
+        emit releaseKeyLeft();
+        break;
+    case Qt::Key_Down:
+        emit releaseKeyDown();
+        break;
+    case Qt::Key_Up:
+        emit releaseKeyUp();
+        break;
+    default:
+        QGraphicsView::keyReleaseEvent(event);
+        break;
     }
 }

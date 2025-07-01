@@ -15,8 +15,29 @@ public:
     //返回num指向的角色的长宽
     int getWidth(int num);
     int getHeight(int num);
+signals:
+    //按键按下信号
+    void pressKeyA();
+    void pressKeyD();
+    void pressKeyW();
+    void pressKeyS();
+    void pressKeyUp();
+    void pressKeyDown();
+    void pressKeyLeft();
+    void pressKeyRight();
+    //按键释放信号
+    void releaseKeyA();
+    void releaseKeyD();
+    void releaseKeyW();
+    void releaseKeyS();
+    void releaseKeyUp();
+    void releaseKeyDown();
+    void releaseKeyLeft();
+    void releaseKeyRight();
 private:
     void loadBackground(const QString& path);
+    void keyPressEvent(QKeyEvent* event);
+    void keyReleaseEvent(QKeyEvent* event);
     QGraphicsScene* scene;
     QGraphicsPixmapItem* bgItem;
     Fighter* fighter0,*fighter1;

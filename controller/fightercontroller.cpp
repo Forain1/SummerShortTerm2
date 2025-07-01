@@ -32,6 +32,10 @@ FighterController::FighterController(Battle* battle,QObject *parent)
 bool FighterController::eventFilter(QObject* obj, QEvent* event) {
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
+        if(keyEvent->isAutoRepeat()){
+            qDebug()<<"repeat press";
+            return true;
+        }
         switch (keyEvent->key()) {
         case Qt::Key_A:
             pressKeyA();
@@ -57,10 +61,15 @@ bool FighterController::eventFilter(QObject* obj, QEvent* event) {
         return true;
     } else if (event->type() == QEvent::KeyRelease) {
         QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
+        if(keyEvent->isAutoRepeat()){
+            qDebug()<<"repeat release";
+            return true;
+        }
         switch (keyEvent->key()) {
         case Qt::Key_A:
         case Qt::Key_D:
             c0->setXSpeed(0);
+            qDebug()<<"release Key D";
             break;
         case Qt::Key_Left:
         case Qt::Key_Right:
@@ -86,6 +95,7 @@ void FighterController::pressKeyA(){
 }
 
 void FighterController::pressKeyD(){
+    qDebug()<<"press Key D";
     if(c0->getState()->getStateIndex()==Index::JumpingState||c0->getState()->getStateIndex()==Index::FallingState){
         c0->setXSpeed(10);
     }

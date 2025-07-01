@@ -35,6 +35,8 @@ public:
     void switchToDefendingState();
     //idle,walk->attack
     void switchToAttackingState();
+    //walk->idle
+    void switchToIdleState();
 private:
     int maxHealth;//最大生命值
     int currentHealth;//当前生命值
