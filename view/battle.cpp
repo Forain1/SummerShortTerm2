@@ -2,8 +2,7 @@
 #include <QGraphicsScene>
 #include <QScrollBar>
 #include <QGraphicsRectItem>
-#define BATTLEWIDTH 1586
-#define BATTLEHEIGHT 886
+
 Battle::Battle(QWidget* parent,QString path,int role0Num,int role1Num):QGraphicsView(parent) {
 
     //设置view的大小
