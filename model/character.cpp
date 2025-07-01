@@ -10,5 +10,7 @@ Character::Character(int x,int y,QObject *parent)
 
 void Character::nextFrame(){
     state->updateFrame(this);
+    x+=xSpeed;
+    y+=ySpeed;
     emit frameUpdate(state->getStateIndex(),state->getCurrentFrame(),x,y);
 }

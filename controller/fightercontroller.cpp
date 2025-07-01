@@ -13,22 +13,17 @@ FighterController::FighterController(Battle* battle,QObject *parent)
     //计时器逻辑
     timer=new QTimer(this);
     timer->setInterval(100);
-    //通知model更新状态和帧数
+    //通知model更新
     connect(timer,&QTimer::timeout,c0,&Character::nextFrame);
     connect(timer,&QTimer::timeout,c1,&Character::nextFrame);
-    //model状态和帧数更新完毕，view更新状态和帧数
+    //model更新完毕，更新view
     connect(c0,&Character::frameUpdate,battle->fighter0,&Fighter::nextFrame);
     connect(c1,&Character::frameUpdate,battle->fighter1,&Fighter::nextFrame);
-
-    //model坐标更新完毕，view更新坐标
-    connect(c0,&Character::CoordinateUpdate,this,[=](int x,int y){battle->setCoodinate(0,x,y);});
-    connect(c1,&Character::CoordinateUpdate,this,[=](int x,int y){battle->setCoodinate(1,x,y);});
-
     timer->start();
 }
 
-bool FighterController::eventFilter(QObject* obj,QEvent* event){
-    if(event->type()==QEvent::KeyPress){
+bool FighterController::eventFilter(QObject* obj, QEvent* event) {
+    if (event->type() == QEvent::KeyPress) {
         QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
         switch (keyEvent->key()) {
         case Qt::Key_A:
@@ -44,35 +39,50 @@ bool FighterController::eventFilter(QObject* obj,QEvent* event){
             pressKeyRight();
             break;
         default:
-            return QObject::eventFilter(obj,event);
+            return QObject::eventFilter(obj, event);
         }
         return true;
-    }else{
-       return QObject::eventFilter(obj,event);
+    } else if (event->type() == QEvent::KeyRelease) {
+        QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
+        switch (keyEvent->key()) {
+        case Qt::Key_A:
+        case Qt::Key_D:
+            c0->setXSpeed(0);
+            break;
+        case Qt::Key_Left:
+        case Qt::Key_Right:
+            c1->setXSpeed(0);
+            break;
+        default:
+            return QObject::eventFilter(obj, event);
+        }
+        return true;
+    } else {
+        return QObject::eventFilter(obj, event);
     }
 }
 
 
 void FighterController::pressKeyA(){
     if(true){//需要在这里检测碰撞
-        c0->setCoordinate(-10,0);
+        c0->setXSpeed(-5);
     }
 }
 
 void FighterController::pressKeyD(){
     if(true){//需要检测碰撞
-        c0->setCoordinate(10,0);
+        c0->setXSpeed(5);
     }
 }
 
 void FighterController::pressKeyLeft(){
     if(true){
-        c1->setCoordinate(-10,0);
+        c1->setXSpeed(-5);
     }
 }
 
 void FighterController::pressKeyRight(){
     if(true){
-        c1->setCoordinate(10,0);
+        c1->setXSpeed(5);
     }
 }
