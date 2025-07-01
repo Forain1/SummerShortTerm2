@@ -13,7 +13,7 @@ public:
     explicit Character(int x,int y,QObject *parent = nullptr);
 
     void setCurrentHealth(int delta){currentHealth+=delta;}
-    void setCharacterState(CharacterState *nextState){state=nextState;}
+    void setCharacterState(CharacterState *nextState);
     void setXSpeed(int x){xSpeed=x;}
     void setYSpeed(int y){ySpeed=y;}
 

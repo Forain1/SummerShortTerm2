@@ -28,7 +28,6 @@ void Fighter::nextFrame(Index::StateIndex state , int frame ,int x ,int y){
     currentState = state;
     currentFrame = frame;
     this->setPos(x,y);
-    qDebug()<<"current state:"<<state;
     update();
 }
 

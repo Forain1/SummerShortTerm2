@@ -38,10 +38,16 @@ bool FighterController::eventFilter(QObject* obj, QEvent* event) {
         }
         switch (keyEvent->key()) {
         case Qt::Key_A:
-            pressKeyA();
+            if (!aPressed) {
+                aPressed = true;
+                pressKeyA();
+            }
             break;
         case Qt::Key_D:
-            pressKeyD();
+            if (!dPressed) {
+                dPressed = true;
+                pressKeyD();
+            }
             break;
         case Qt::Key_S:
             pressKeyS();
@@ -50,10 +56,16 @@ bool FighterController::eventFilter(QObject* obj, QEvent* event) {
             pressKeyW();
             break;
         case Qt::Key_Left:
-            pressKeyLeft();
+            if (!leftPressed) {
+                leftPressed = true;
+                pressKeyLeft();
+            }
             break;
         case Qt::Key_Right:
-            pressKeyRight();
+            if (!rightPressed) {
+                rightPressed = true;
+                pressKeyRight();
+            }
             break;
         default:
             return QObject::eventFilter(obj, event);
@@ -67,13 +79,46 @@ bool FighterController::eventFilter(QObject* obj, QEvent* event) {
         }
         switch (keyEvent->key()) {
         case Qt::Key_A:
-        case Qt::Key_D:
+            aPressed = false;
             c0->setXSpeed(0);
+<<<<<<< HEAD
             qDebug()<<"release Key D";
+=======
+            if (c0->getState()->getStateIndex() == Index::WalkingState) {
+                c0->setCharacterState(new IdleState());
+            }
+            break;
+        case Qt::Key_D:
+            dPressed = false;
+            c0->setXSpeed(0);
+            if (c0->getState()->getStateIndex() == Index::WalkingState) {
+                c0->setCharacterState(new IdleState());
+            }
+            break;
+        case Qt::Key_S:
+            if(c0->getState()->getStateIndex()==Index::DefendingState){
+                c0->setCharacterState(new IdleState());
+            }
+>>>>>>> 5b218c7ae807d05506cd947683df28a6b7b0b090
             break;
         case Qt::Key_Left:
-        case Qt::Key_Right:
+            leftPressed = false;
             c1->setXSpeed(0);
+            if (c1->getState()->getStateIndex() == Index::WalkingState) {
+                c1->setCharacterState(new IdleState());
+            }
+            break;
+        case Qt::Key_Right:
+            rightPressed = false;
+            c1->setXSpeed(0);
+            if (c1->getState()->getStateIndex() == Index::WalkingState) {
+                c1->setCharacterState(new IdleState());
+            }
+            break;
+        case Qt::Key_PageDown:
+            if(c1->getState()->getStateIndex()==Index::DefendingState){
+                c1->setCharacterState(new IdleState());
+            }
             break;
         default:
             return QObject::eventFilter(obj, event);
