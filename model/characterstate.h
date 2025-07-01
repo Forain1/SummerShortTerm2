@@ -15,6 +15,7 @@ public:
     virtual void updateFrame(Character *parent) = 0;//切换至下一帧
     virtual Index::StateIndex getStateIndex() const = 0;//获取状态名
     virtual int getMaxFrame() const = 0;//获取状态动画的总帧数
+    virtual int getCurrentFrame() const{return currentFrame;}//获取当前动画在第几帧
 protected:
     int currentFrame=0;//记录当前帧数
 signals:

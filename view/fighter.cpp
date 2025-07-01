@@ -1,6 +1,6 @@
 #include"fighter.h"
 #include<QPainter>
-
+#include"battle.h"
 
 Fighter::Fighter(QGraphicsItem* parent,int roleNum,bool left):QGraphicsObject(parent) {
     if(roleNum==0){
@@ -25,9 +25,10 @@ Fighter::Fighter(QGraphicsItem* parent,int roleNum,bool left):QGraphicsObject(pa
 
 }
 
-void Fighter::nextFrame(Index::StateIndex state , int frame){
+void Fighter::nextFrame(Index::StateIndex state , int frame ,int x ,int y){
     currentState = state;
     currentFrame = frame;
+    this->setPos(x,y);
     update();
 }
 

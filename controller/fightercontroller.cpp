@@ -37,6 +37,12 @@ bool FighterController::eventFilter(QObject* obj,QEvent* event){
         case Qt::Key_D:
             pressKeyD();
             break;
+        case Qt::Key_Left:
+            pressKeyLeft();
+            break;
+        case Qt::Key_Right:
+            pressKeyRight();
+            break;
         default:
             return QObject::eventFilter(obj,event);
         }
@@ -45,6 +51,7 @@ bool FighterController::eventFilter(QObject* obj,QEvent* event){
        return QObject::eventFilter(obj,event);
     }
 }
+
 
 void FighterController::pressKeyA(){
     if(true){//需要在这里检测碰撞
@@ -55,5 +62,17 @@ void FighterController::pressKeyA(){
 void FighterController::pressKeyD(){
     if(true){//需要检测碰撞
         c0->setCoordinate(10,0);
+    }
+}
+
+void FighterController::pressKeyLeft(){
+    if(true){
+        c1->setCoordinate(-10,0);
+    }
+}
+
+void FighterController::pressKeyRight(){
+    if(true){
+        c1->setCoordinate(10,0);
     }
 }

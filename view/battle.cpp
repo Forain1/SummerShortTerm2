@@ -1,6 +1,6 @@
 #include "battle.h"
 #include <QGraphicsScene>
-
+#include <QScrollBar>
 Battle::Battle(QWidget* parent,QString path,int role0Num,int role1Num):QGraphicsView(parent) {
     scene = new QGraphicsScene(this);
     scene->setSceneRect(0,0,1600,900);
@@ -18,6 +18,9 @@ Battle::Battle(QWidget* parent,QString path,int role0Num,int role1Num):QGraphics
     fighter0->setPos(20,900-fighter0->getHeight());
     scene->addItem(fighter1);
     fighter1->setPos(1600-20-fighter1->getWidth(),900-fighter1->getHeight());
+
+    //由于view大于所提供的窗口 在这里把窗口拉到最下方
+    this->verticalScrollBar()->setValue(this->verticalScrollBar()->maximum());
 }
 
 Battle::~Battle(){}

@@ -4,19 +4,21 @@
 #include <QList>
 #include "../common/index.h"
 
+class Battle;
 class Fighter:public QGraphicsObject
 {
     Q_OBJECT
 public:
-    Fighter(QGraphicsItem* parent=nullptr,int roleNum=0,bool left=true);
+    Fighter(Battle* view = nullptr,QGraphicsItem* parent=nullptr,int roleNum=0,bool left=true);
     QRectF boundingRect() const;
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
     int getWidth() const;
     int getHeight() const;
 public slots:
-    void nextFrame(Index::StateIndex state,int frame);//state表示要播放哪个数组的动画,frame表示是该动画的第几帧
+    void nextFrame(Index::StateIndex state,int frame,int x,int y);//state表示要播放哪个数组的动画,frame表示是该动画的第几帧
 private:
     QList<QList<QPixmap>> frames;
+    Battle* parent;
     int currentFrame=0;
     Index::StateIndex currentState=Index::IdleState;
 };

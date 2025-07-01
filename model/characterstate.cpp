@@ -10,5 +10,4 @@ void IdleState::updateFrame(Character *parent){
     }else{
         currentFrame=0;
     }
-    emit parent->frameUpdate(Index::IdleState,currentFrame);
 }
