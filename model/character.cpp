@@ -17,9 +17,8 @@ void Character::nextFrame(){
         ySpeed=0;
         y=groundY;
     }
-    emit frameUpdate(state->getStateIndex(),state->getCurrentFrame(),x,y);
-
     state->updateFrame(this);
+    emit frameUpdate(state->getStateIndex(),state->getCurrentFrame(),x,y);
 }
 
 void Character::switchToJumpingState(){

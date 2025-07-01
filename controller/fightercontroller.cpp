@@ -1,6 +1,7 @@
 #include "fightercontroller.h"
 #include<QEvent>
 #include<QKeyEvent>
+#include "../model/characterstate.h"
 FighterController::FighterController(Battle* battle,QObject *parent)
     : QObject{parent},battle(battle)
 {
@@ -57,10 +58,10 @@ bool FighterController::eventFilter(QObject* obj, QEvent* event) {
         QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
         switch (keyEvent->key()) {
         case Qt::Key_A:
-
         case Qt::Key_D:
             c0->setXSpeed(0);
             break;
+        case Qt::Key_PageDown
         case Qt::Key_Left:
         case Qt::Key_Right:
             c1->setXSpeed(0);
@@ -76,13 +77,19 @@ bool FighterController::eventFilter(QObject* obj, QEvent* event) {
 
 
 void FighterController::pressKeyA(){
-    if(true){//需要在这里检测碰撞
+    if(c0->getState()->getStateIndex()==Index::JumpingState||c0->getState()->getStateIndex()==Index::FallingState){
+        c0->setXSpeed(-10);
+    }
+    else if(true){//需要在这里检测碰撞
         c0->switchToWalkingState(-10);
     }
 }
 
 void FighterController::pressKeyD(){
-    if(true){//需要检测碰撞
+    if(c0->getState()->getStateIndex()==Index::JumpingState||c0->getState()->getStateIndex()==Index::FallingState){
+        c0->setXSpeed(10);
+    }
+    else if(true){//需要检测碰撞
         c0->switchToWalkingState(10);
     }
 }
@@ -96,12 +103,18 @@ void FighterController::pressKeyS(){
 }
 
 void FighterController::pressKeyLeft(){
-    if(true){
+    if(c1->getState()->getStateIndex()==Index::JumpingState||c1->getState()->getStateIndex()==Index::FallingState){
+        c1->setXSpeed(-10);
+    }
+    else if(true){
         c1->switchToWalkingState(-10);
     }
 }
 
 void FighterController::pressKeyRight(){
+    if(c1->getState()->getStateIndex()==Index::JumpingState||c1->getState()->getStateIndex()==Index::FallingState){
+        c1->setXSpeed(10);
+    }
     if(true){
         c1->switchToWalkingState(10);
     }
