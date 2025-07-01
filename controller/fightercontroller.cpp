@@ -34,10 +34,16 @@ bool FighterController::eventFilter(QObject* obj, QEvent* event) {
         QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
         switch (keyEvent->key()) {
         case Qt::Key_A:
-            pressKeyA();
+            if (!aPressed) {
+                aPressed = true;
+                pressKeyA();
+            }
             break;
         case Qt::Key_D:
-            pressKeyD();
+            if (!dPressed) {
+                dPressed = true;
+                pressKeyD();
+            }
             break;
         case Qt::Key_S:
             pressKeyS();
@@ -46,10 +52,16 @@ bool FighterController::eventFilter(QObject* obj, QEvent* event) {
             pressKeyW();
             break;
         case Qt::Key_Left:
-            pressKeyLeft();
+            if (!leftPressed) {
+                leftPressed = true;
+                pressKeyLeft();
+            }
             break;
         case Qt::Key_Right:
-            pressKeyRight();
+            if (!rightPressed) {
+                rightPressed = true;
+                pressKeyRight();
+            }
             break;
         default:
             return QObject::eventFilter(obj, event);
@@ -59,12 +71,32 @@ bool FighterController::eventFilter(QObject* obj, QEvent* event) {
         QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
         switch (keyEvent->key()) {
         case Qt::Key_A:
-        case Qt::Key_D:
+            aPressed = false;
             c0->setXSpeed(0);
+            if (c0->getState()->getStateIndex() == Index::WalkingState) {
+                c0->setCharacterState(new IdleState());
+            }
+            break;
+        case Qt::Key_D:
+            dPressed = false;
+            c0->setXSpeed(0);
+            if (c0->getState()->getStateIndex() == Index::WalkingState) {
+                c0->setCharacterState(new IdleState());
+            }
             break;
         case Qt::Key_Left:
-        case Qt::Key_Right:
+            leftPressed = false;
             c1->setXSpeed(0);
+            if (c1->getState()->getStateIndex() == Index::WalkingState) {
+                c1->setCharacterState(new IdleState());
+            }
+            break;
+        case Qt::Key_Right:
+            rightPressed = false;
+            c1->setXSpeed(0);
+            if (c1->getState()->getStateIndex() == Index::WalkingState) {
+                c1->setCharacterState(new IdleState());
+            }
             break;
         default:
             return QObject::eventFilter(obj, event);

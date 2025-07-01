@@ -16,6 +16,11 @@ private:
     QTimer *timer;
     Battle* battle;
     Character *c0,*c1;
+    // 按键状态
+    bool aPressed = false;
+    bool dPressed = false;
+    bool leftPressed = false;
+    bool rightPressed = false;
     void pressKeyA();
     void pressKeyD();
     void pressKeyS();
