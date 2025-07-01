@@ -4,8 +4,6 @@
 #include<QGraphicsScene>
 #include<QGraphicsItem>
 #include"fighter.h"
-#define BATTLEWIDTH 1586
-#define BATTLEHEIGHT 886
 class Battle: public QGraphicsView
 {
     Q_OBJECT
