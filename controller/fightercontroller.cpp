@@ -84,6 +84,11 @@ bool FighterController::eventFilter(QObject* obj, QEvent* event) {
                 c0->setCharacterState(new IdleState());
             }
             break;
+        case Qt::Key_S:
+            if(c0->getState()->getStateIndex()==Index::DefendingState){
+                c0->setCharacterState(new IdleState());
+            }
+            break;
         case Qt::Key_Left:
             leftPressed = false;
             c1->setXSpeed(0);
@@ -95,6 +100,11 @@ bool FighterController::eventFilter(QObject* obj, QEvent* event) {
             rightPressed = false;
             c1->setXSpeed(0);
             if (c1->getState()->getStateIndex() == Index::WalkingState) {
+                c1->setCharacterState(new IdleState());
+            }
+            break;
+        case Qt::Key_PageDown:
+            if(c1->getState()->getStateIndex()==Index::DefendingState){
                 c1->setCharacterState(new IdleState());
             }
             break;
