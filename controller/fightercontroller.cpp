@@ -62,7 +62,6 @@ bool FighterController::eventFilter(QObject* obj, QEvent* event) {
         case Qt::Key_D:
             c0->setXSpeed(0);
             break;
-        case Qt::Key_PageDown
         case Qt::Key_Left:
         case Qt::Key_Right:
             c1->setXSpeed(0);
