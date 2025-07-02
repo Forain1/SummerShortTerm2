@@ -4,6 +4,7 @@
 #include<QGraphicsScene>
 #include<QGraphicsItem>
 #include"fighter.h"
+#include"showhealth.h"
 class Battle: public QGraphicsView
 {
     Q_OBJECT
@@ -43,6 +44,7 @@ private:
     QGraphicsScene* scene;
     QGraphicsPixmapItem* bgItem;
     Fighter* fighter0,*fighter1;
+    ShowHealth *health0,*health1;
 
 
 };

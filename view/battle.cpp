@@ -30,6 +30,18 @@ Battle::Battle(QWidget* parent,QString path,int role0Num,int role1Num):QGraphics
     //由于view大于所提供的窗口 在这里把窗口拉到最下方
     this->verticalScrollBar()->setValue(this->verticalScrollBar()->maximum());
     this->horizontalScrollBar()->setValue(this->horizontalScrollBar()->minimum());
+
+    //生成角色对应的血量条
+    health0 = new ShowHealth();
+    health1 = new ShowHealth();
+    //添加进入场景
+    scene->addItem(health0);
+    health0->setPos(20,0);
+    scene->addItem(health1);
+    health1->setPos(BATTLEWIDTH-20-HEALTHWIDTH,0);
+
+
+
 }
 
 Battle::~Battle(){}

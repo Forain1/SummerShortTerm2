@@ -1,8 +1,12 @@
 #include"fighter.h"
 #include<QPainter>
-
+#include<QTransform>
 
 Fighter::Fighter(QGraphicsItem* parent,int roleNum,bool left):QGraphicsObject(parent) {
+    //初始化角色图片的朝向
+    if(left)currentDir = Index::rightIndex;
+    else currentDir = Index::leftIndex;
+
     if(roleNum==0){
         frames.resize(6);
         qDebug()<<"loading image";
@@ -22,11 +26,15 @@ Fighter::Fighter(QGraphicsItem* parent,int roleNum,bool left):QGraphicsObject(pa
 
         }
     }
+
+
+    emit initInfo(getWidth(),getHeight());
 }
 
-void Fighter::nextFrame(Index::StateIndex state , int frame ,int x ,int y){
+void Fighter::nextFrame(Index::StateIndex state , int frame ,int x ,int y,Index::DirectionIndex characterDir){
     currentState = state;
     currentFrame = frame;
+    currentDir = characterDir;
     this->setPos(x,y);
     update();
 }
@@ -36,7 +44,13 @@ QRectF Fighter::boundingRect() const{
 }
 
 void Fighter::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
-    painter->drawPixmap(0,0,frames[currentState][currentFrame]);
+    if(currentDir==Index::rightIndex){
+        //图像默认存储格式朝左,若角色此时朝向为右,则需展示翻转后的图片
+        QTransform trans;
+        trans.scale(-1,1);
+        QPixmap flipPix = frames[currentState][currentFrame].transformed(trans);
+        painter->drawPixmap(0,0,flipPix);
+    }else painter->drawPixmap(0,0,frames[currentState][currentFrame]);
 }
 
 int Fighter::getWidth()const{
