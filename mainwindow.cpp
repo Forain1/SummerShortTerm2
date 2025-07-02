@@ -19,11 +19,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->stackedWidget->addWidget(new  Battle(this,":/src/bg0.jpg"));
     ui->stackedWidget->addWidget(new Settlement(this));
     ui->stackedWidget->setCurrentIndex(Index::MenuIndex);
-
-    connect(getCast(),&Cast::roleBtnClicked,getBattle(),[=](){
-        Battle *battle=getBattle();
-        emit battle->initInfo(battle->getWidth(0),battle->getHeight(0),battle->getWidth(1),battle->getHeight(1));
-    });
 }
 
 MainWindow::~MainWindow()

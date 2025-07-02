@@ -18,6 +18,8 @@ private:
     MainWindow *view;
     TopModel *viewModel;
     void setConnection();
+    void fightStart();
+    void fightStop();
 };
 
 #endif // APP_H

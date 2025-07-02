@@ -28,7 +28,7 @@ void Character::nextFrame(){
     if(xSpeed!=0){
         characterDir=xSpeed>0?Index::rightIndex : Index::leftIndex;
     }
-    emit frameUpdate(state->getStateIndex(),state->getCurrentFrame(),x,y,characterDir);//发送信号给fighter.让其改变动画
+    emit frameUpdate(state->getStateIndex(),state->getCurrentFrame(),x,y,characterDir,currentHealth);//发送信号给fighter.让其改变动画
 }
 
 void Character::switchToJumpingState(){
@@ -71,7 +71,7 @@ void Character::switchToIdleState(){
     }
 }
 
-void Character::handlePressKeyA(){
+void Character::handleC0LeftMove(){
     if(!aPressed){
         aPressed=true;
         if(getState()->getStateIndex()==Index::JumpingState||getState()->getStateIndex()==Index::FallingState){
@@ -83,7 +83,7 @@ void Character::handlePressKeyA(){
     }
 }
 
-void Character::handlePressKeyD(){
+void Character::handleC0RightMove(){
     if(!dPressed){
         dPressed=true;
         if(getState()->getStateIndex()==Index::JumpingState||getState()->getStateIndex()==Index::FallingState){
@@ -95,15 +95,15 @@ void Character::handlePressKeyD(){
     }
 }
 
-void Character::handlePressKeyW(){
+void Character::handleC0Jump(){
     switchToJumpingState();
 }
 
-void Character::handlePressKeyS(){
+void Character::handleC0Defend(){
     switchToDefendingState();
 }
 
-void Character::handlePressKeyLeft(){
+void Character::handleC1LeftMove(){
     if(!leftPressed){
         leftPressed=true;
         if(getState()->getStateIndex()==Index::JumpingState||getState()->getStateIndex()==Index::FallingState){
@@ -115,7 +115,7 @@ void Character::handlePressKeyLeft(){
     }
 }
 
-void Character::handlePressKeyRight(){
+void Character::handleC1RightMove(){
     if(!rightPressed){
         rightPressed=true;
         if(getState()->getStateIndex()==Index::JumpingState||getState()->getStateIndex()==Index::FallingState){
@@ -127,15 +127,15 @@ void Character::handlePressKeyRight(){
     }
 }
 
-void Character::handlePressKeyUp(){
+void Character::handleC1Jump(){
     switchToJumpingState();
 }
 
-void Character::handlePressKeyDown(){
+void Character::handleC1Defend(){
     switchToDefendingState();
 }
 
-void Character::handleReleaseKeyA(){
+void Character::handleC0StopLeftMove(){
     aPressed = false;
     if(!aPressed&&!dPressed){
         setXSpeed(0);
@@ -145,7 +145,7 @@ void Character::handleReleaseKeyA(){
     }
 }
 
-void Character::handleReleaseKeyD(){
+void Character::handleC0StopRightMove(){
     dPressed = false;
     if(!aPressed&&!dPressed){
         setXSpeed(0);
@@ -155,13 +155,13 @@ void Character::handleReleaseKeyD(){
     }
 }
 
-void Character::handleReleaseKeyS(){
+void Character::handleC0StopDefend(){
     if(getState()->getStateIndex()==Index::DefendingState){
         setCharacterState(new IdleState());
     }
 }
 
-void Character::handleReleaseKeyLeft(){
+void Character::handleC1StopLeftMove(){
     leftPressed = false;
     if(!leftPressed&&!rightPressed){
         setXSpeed(0);
@@ -171,7 +171,7 @@ void Character::handleReleaseKeyLeft(){
     }
 }
 
-void Character::handleReleaseKeyRight(){
+void Character::handleC1StopRightMove(){
     rightPressed = false;
     if(!leftPressed&&!rightPressed){
         setXSpeed(0);
@@ -181,7 +181,7 @@ void Character::handleReleaseKeyRight(){
     }
 }
 
-void Character::handleReleaseKeyDown(){
+void Character::handleC1StopDefend(){
     if(getState()->getStateIndex()==Index::DefendingState){
         setCharacterState(new IdleState());
     }

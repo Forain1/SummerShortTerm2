@@ -11,7 +11,7 @@ class Character : public QObject
 public:
     explicit Character(Index::DirectionIndex characterDir,QObject *parent = nullptr);
 
-    void setCurrentHealth(int delta){currentHealth+=delta;}
+    void setCurrentHealth(int h){currentHealth=h;}
     void setCharacterState(CharacterState *nextState);
     void setX(int xcoordinate){x=xcoordinate;}
     void setY(int ycoordinate){y=ycoordinate;}
@@ -49,6 +49,8 @@ public:
     void switchToAttackingState();
     //walk,defend->idle
     void switchToIdleState();
+    //由topmodel层进行调用
+    void nextFrame();
 private:
     int maxHealth;//最大生命值
     int currentHealth;//当前生命值
@@ -70,27 +72,24 @@ private:
 
 
 public slots:
-    void handlePressKeyA();
-    void handlePressKeyD();
-    void handlePressKeyS();
-    void handlePressKeyW();
-    void handlePressKeyLeft();
-    void handlePressKeyRight();
-    void handlePressKeyUp();
-    void handlePressKeyDown();
-    void handleReleaseKeyA();
-    void handleReleaseKeyD();
-    void handleReleaseKeyS();
-    void handleReleaseKeyLeft();
-    void handleReleaseKeyRight();
-    void handleReleaseKeyDown();
+    void handleC0LeftMove();
+    void handleC0RightMove();
+    void handleC0Defend();
+    void handleC0Jump();
+    void handleC1LeftMove();
+    void handleC1RightMove();
+    void handleC1Jump();
+    void handleC1Defend();
+    void handleC0StopLeftMove();
+    void handleC0StopRightMove();
+    void handleC0StopDefend();
+    void handleC1StopLeftMove();
+    void handleC1StopRightMove();
+    void handleC1StopDefend();
 
 
 signals:
-    void frameUpdate(Index::StateIndex stateIndex,int frame,int x,int y,Index::DirectionIndex characterDir);
-
-public slots:
-    void nextFrame();
+    void frameUpdate(Index::StateIndex stateIndex,int frame,int x,int y,Index::DirectionIndex characterDir,int currentHealth);
 };
 
 #endif // CHARACTER_H
