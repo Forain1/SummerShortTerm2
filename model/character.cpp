@@ -36,7 +36,7 @@ void Character::switchToJumpingState(){
 }
 
 void Character::switchToWalkingState(int vx){
-    if(state->getStateIndex()==Index::IdleState){
+    if(state->getStateIndex()==Index::IdleState||state->getStateIndex()==Index::WalkingState){
         setCharacterState(new WalkingState(this));
         //修改速度
         xSpeed=vx;
@@ -134,7 +134,9 @@ void Character::handlePressKeyDown(){
 
 void Character::handleReleaseKeyA(){
     aPressed = false;
-    setXSpeed(0);
+    if(!aPressed&&!dPressed){
+        setXSpeed(0);
+    }
     if (getState()->getStateIndex() == Index::WalkingState) {
         setCharacterState(new IdleState());
     }
@@ -142,7 +144,9 @@ void Character::handleReleaseKeyA(){
 
 void Character::handleReleaseKeyD(){
     dPressed = false;
-    setXSpeed(0);
+    if(!aPressed&&!dPressed){
+        setXSpeed(0);
+    }
     if (getState()->getStateIndex() == Index::WalkingState) {
         setCharacterState(new IdleState());
     }
@@ -156,7 +160,9 @@ void Character::handleReleaseKeyS(){
 
 void Character::handleReleaseKeyLeft(){
     leftPressed = false;
-    setXSpeed(0);
+    if(!leftPressed&&!rightPressed){
+        setXSpeed(0);
+    }
     if (getState()->getStateIndex() == Index::WalkingState) {
         setCharacterState(new IdleState());
     }
@@ -164,7 +170,9 @@ void Character::handleReleaseKeyLeft(){
 
 void Character::handleReleaseKeyRight(){
     rightPressed = false;
-    setXSpeed(0);
+    if(!leftPressed&&!rightPressed){
+        setXSpeed(0);
+    }
     if (getState()->getStateIndex() == Index::WalkingState) {
         setCharacterState(new IdleState());
     }
