@@ -1,11 +1,12 @@
 #include "character.h"
 #include "characterstate.h"
 #include <QDebug>
-Character::Character(int x,int y,QObject *parent)
+Character::Character(int x,int y,Index::DirectionIndex direction,QObject *parent)
     : QObject{parent},maxHealth{100},currentHealth{100},x(x),y(y)
 {
     state=new IdleState(this);
     groundY=y;
+    characterDir=direction;
 }
 
 void Character::setCharacterState(CharacterState *nextState){
@@ -25,7 +26,11 @@ void Character::nextFrame(){
         y=groundY;
     }
     state->updateFrame(this);//更新当前状态的帧页面
-    emit frameUpdate(state->getStateIndex(),state->getCurrentFrame(),x,y);//发送信号给fighter.让其改变动画
+    //如果速度不为0，修改朝向
+    if(xSpeed!=0){
+        characterDir=xSpeed>0?Index::rightIndex : Index::leftIndex;
+    }
+    emit frameUpdate(state->getStateIndex(),state->getCurrentFrame(),x,y,characterDir);//发送信号给fighter.让其改变动画
 }
 
 void Character::switchToJumpingState(){
@@ -40,8 +45,6 @@ void Character::switchToWalkingState(int vx){
         setCharacterState(new WalkingState(this));
         //修改速度
         xSpeed=vx;
-        //修改朝向
-        characterDir=vx>0?direction::right:direction::left;
     }
 }
 

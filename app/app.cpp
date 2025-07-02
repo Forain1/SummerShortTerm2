@@ -3,14 +3,15 @@
 #include "../mainwindow.h"
 #include "../model/character.h"
 #include "../model/scenestate.h"
+#include "../common/index.h"
 
 App::App(QObject *parent)
     : QObject{parent}
 {
     view=new MainWindow();
     //创建角色
-    c0 = new Character(20,BATTLEHEIGHT-view->getBattle()->getHeight(0),this);
-    c1 = new Character(BATTLEWIDTH-20-view->getBattle()->getWidth(1),BATTLEHEIGHT-view->getBattle()->getHeight(1),this);
+    c0 = new Character(20,BATTLEHEIGHT-view->getBattle()->getHeight(0),Index::rightIndex,this);
+    c1 = new Character(BATTLEWIDTH-20-view->getBattle()->getWidth(1),BATTLEHEIGHT-view->getBattle()->getHeight(1),Index::leftIndex,this);
 
     timer=new QTimer(this);
     timer->setInterval(100);

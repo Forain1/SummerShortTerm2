@@ -9,5 +9,8 @@ enum PageIndex{
 enum StateIndex{
     IdleState,WalkingState,JumpingState,FallingState,AttackingState,DefendingState,StunnedState
 };
+enum DirectionIndex{
+    leftIndex,rightIndex
+};
 }
 #endif // INDEX_H

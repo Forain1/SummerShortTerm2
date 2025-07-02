@@ -9,19 +9,20 @@ class Character : public QObject
 {
     Q_OBJECT
 public:
-    explicit Character(int x,int y,QObject *parent = nullptr);
+    explicit Character(int x,int y,Index::DirectionIndex characterDir,QObject *parent = nullptr);
 
     void setCurrentHealth(int delta){currentHealth+=delta;}
     void setCharacterState(CharacterState *nextState);
     void setXSpeed(int x){xSpeed=x;}
     void setYSpeed(int y){ySpeed=y;}
 
-    int getCurrentHealth(){return currentHealth;}
-    CharacterState *getState(){return state;};
-    int getX(){return x;}
-    int getY(){return y;}
-    int getSpeedX(){return xSpeed;}
-    int getSpeedY(){return ySpeed;}
+    int getCurrentHealth() const {return currentHealth;}
+    CharacterState *getState() const {return state;};
+    int getX() const {return x;}
+    int getY() const {return y;}
+    int getSpeedX() const {return xSpeed;}
+    int getSpeedY() const {return ySpeed;}
+    Index::DirectionIndex getDirection() const {return characterDir;}
 
     bool isOnGround(){return y>=groundY;}
 
@@ -42,11 +43,8 @@ private:
     CharacterState *state;//角色状态：Idle,Jumping,Falling...
     int x,y;//角色坐标
     int xSpeed=0,ySpeed=0;//x,y方向速度
-    enum direction{
-        left,right
-    };
     int groundY;
-    direction characterDir;
+    Index::DirectionIndex characterDir;
     bool aPressed = false;
     bool dPressed = false;
     bool leftPressed = false;
@@ -70,7 +68,7 @@ public slots:
 
 
 signals:
-    void frameUpdate(Index::StateIndex stateIndex,int frame,int x,int y);
+    void frameUpdate(Index::StateIndex stateIndex,int frame,int x,int y,Index::DirectionIndex characterDir);
 
 public slots:
     void nextFrame();
