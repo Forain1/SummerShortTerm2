@@ -37,6 +37,8 @@ signals:
     void releaseKeyDown();
     void releaseKeyLeft();
     void releaseKeyRight();
+    //角色初始化信息
+    void initInfo(int w0,int h0,int w1,int h1);
 private:
     void loadBackground(const QString& path);
     void keyPressEvent(QKeyEvent* event);

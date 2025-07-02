@@ -36,15 +36,18 @@ Battle::Battle(QWidget* parent,QString path,int role0Num,int role1Num):QGraphics
     health1 = new ShowHealth();
     //添加进入场景
     scene->addItem(health0);
-    health0->setPos(20,0);
+    health0->setPos(20,20);
     scene->addItem(health1);
-    health1->setPos(BATTLEWIDTH-20-HEALTHWIDTH,0);
+    health1->setPos(BATTLEWIDTH-20-HEALTHWIDTH,20);
 
 
+    emit initInfo(fighter0->getWidth(),fighter0->getHeight(),fighter1->getWidth(),fighter1->getHeight());
 
 }
 
 Battle::~Battle(){}
+
+
 
 void Battle::loadBackground(const QString& imagePath)
 {

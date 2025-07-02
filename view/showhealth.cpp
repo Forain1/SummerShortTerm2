@@ -11,7 +11,7 @@ QRectF ShowHealth::boundingRect()const{
 void ShowHealth::paint(QPainter* painter ,const QStyleOptionGraphicsItem * option,QWidget * widget){
     painter->setPen(Qt::black);
     painter->drawRect(0,0,HEALTHWIDTH,HEALTHHEIGHT);
-    painter->drawText(boundingRect(),QString::number(health));
+    painter->drawText(boundingRect(),QString::number(health),QTextOption(Qt::AlignCenter));
 }
 
 void ShowHealth::changeHealth(int newHealth){

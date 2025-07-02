@@ -26,9 +26,6 @@ Fighter::Fighter(QGraphicsItem* parent,int roleNum,bool left):QGraphicsObject(pa
 
         }
     }
-
-
-    emit initInfo(getWidth(),getHeight());
 }
 
 void Fighter::nextFrame(Index::StateIndex state , int frame ,int x ,int y,Index::DirectionIndex characterDir){
