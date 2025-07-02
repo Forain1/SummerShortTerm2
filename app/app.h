@@ -5,8 +5,7 @@
 #include <QTimer>
 
 class MainWindow;
-class Character;
-class SceneState;
+class TopModel;
 
 class App : public QObject
 {
@@ -17,11 +16,7 @@ private:
     QTimer *timer;
 
     MainWindow *view;
-    Character *c0;
-    Character *c1;
-
-    SceneState *sceneState;
-
+    TopModel *viewModel;
     void setConnection();
 };
 

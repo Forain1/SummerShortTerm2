@@ -1,6 +1,7 @@
 #include "app.h"
 
 #include "../mainwindow.h"
+#include "../model/topmodel.h"
 #include "../model/character.h"
 #include "../model/scenestate.h"
 #include "../common/index.h"
@@ -9,15 +10,12 @@ App::App(QObject *parent)
     : QObject{parent}
 {
     view=new MainWindow();
-    //创建角色
-    c0 = new Character(20,BATTLEHEIGHT-view->getBattle()->getHeight(0),Index::rightIndex,this);
-    c1 = new Character(BATTLEWIDTH-20-view->getBattle()->getWidth(1),BATTLEHEIGHT-view->getBattle()->getHeight(1),Index::leftIndex,this);
+
+    viewModel=new TopModel();
 
     timer=new QTimer(this);
     timer->setInterval(100);
     timer->start();
-
-    sceneState=new SceneState(this);
 
     setConnection();
 
@@ -25,36 +23,38 @@ App::App(QObject *parent)
 }
 
 void App::setConnection(){
+    //view告知model角色的宽度和长度
+    connect(view->getBattle(),&Battle::initInfo,viewModel,&TopModel::getSize);
     //通知character model更新
-    connect(timer,&QTimer::timeout,c0,&Character::nextFrame);
-    connect(timer,&QTimer::timeout,c1,&Character::nextFrame);
+    connect(timer,&QTimer::timeout,viewModel->getCharacter0(),&Character::nextFrame);
+    connect(timer,&QTimer::timeout,viewModel->getCharacter1(),&Character::nextFrame);
     //character model更新完毕，更新view
-    connect(c0,&Character::frameUpdate,view->getBattle()->getFighter0(),&Fighter::nextFrame);
-    connect(c1,&Character::frameUpdate,view->getBattle()->getFighter1(),&Fighter::nextFrame);
+    connect(viewModel->getCharacter0(),&Character::frameUpdate,view->getBattle()->getFighter0(),&Fighter::nextFrame);
+    connect(viewModel->getCharacter1(),&Character::frameUpdate,view->getBattle()->getFighter1(),&Fighter::nextFrame);
 
     //连接按键信号和character model槽函数
-    connect(view->getBattle(),&Battle::pressKeyA,c0,&Character::handlePressKeyA);
-    connect(view->getBattle(),&Battle::pressKeyD,c0,&Character::handlePressKeyD);
-    connect(view->getBattle(),&Battle::pressKeyW,c0,&Character::handlePressKeyW);
-    connect(view->getBattle(),&Battle::pressKeyS,c0,&Character::handlePressKeyS);
-    connect(view->getBattle(),&Battle::pressKeyLeft,c1,&Character::handlePressKeyLeft);
-    connect(view->getBattle(),&Battle::pressKeyRight,c1,&Character::handlePressKeyRight);
-    connect(view->getBattle(),&Battle::pressKeyUp,c1,&Character::handlePressKeyUp);
-    connect(view->getBattle(),&Battle::pressKeyDown,c1,&Character::handlePressKeyDown);
+    connect(view->getBattle(),&Battle::pressKeyA,viewModel->getCharacter0(),&Character::handlePressKeyA);
+    connect(view->getBattle(),&Battle::pressKeyD,viewModel->getCharacter0(),&Character::handlePressKeyD);
+    connect(view->getBattle(),&Battle::pressKeyW,viewModel->getCharacter0(),&Character::handlePressKeyW);
+    connect(view->getBattle(),&Battle::pressKeyS,viewModel->getCharacter0(),&Character::handlePressKeyS);
+    connect(view->getBattle(),&Battle::pressKeyLeft,viewModel->getCharacter1(),&Character::handlePressKeyLeft);
+    connect(view->getBattle(),&Battle::pressKeyRight,viewModel->getCharacter1(),&Character::handlePressKeyRight);
+    connect(view->getBattle(),&Battle::pressKeyUp,viewModel->getCharacter1(),&Character::handlePressKeyUp);
+    connect(view->getBattle(),&Battle::pressKeyDown,viewModel->getCharacter1(),&Character::handlePressKeyDown);
 
-    connect(view->getBattle(),&Battle::releaseKeyA,c0,&Character::handleReleaseKeyA);
-    connect(view->getBattle(),&Battle::releaseKeyD,c0,&Character::handleReleaseKeyD);
-    connect(view->getBattle(),&Battle::releaseKeyS,c0,&Character::handleReleaseKeyS);
-    connect(view->getBattle(),&Battle::releaseKeyLeft,c1,&Character::handleReleaseKeyLeft);
-    connect(view->getBattle(),&Battle::releaseKeyRight,c1,&Character::handleReleaseKeyRight);
-    connect(view->getBattle(),&Battle::releaseKeyDown,c1,&Character::handleReleaseKeyDown);
+    connect(view->getBattle(),&Battle::releaseKeyA,viewModel->getCharacter0(),&Character::handleReleaseKeyA);
+    connect(view->getBattle(),&Battle::releaseKeyD,viewModel->getCharacter0(),&Character::handleReleaseKeyD);
+    connect(view->getBattle(),&Battle::releaseKeyS,viewModel->getCharacter0(),&Character::handleReleaseKeyS);
+    connect(view->getBattle(),&Battle::releaseKeyLeft,viewModel->getCharacter1(),&Character::handleReleaseKeyLeft);
+    connect(view->getBattle(),&Battle::releaseKeyRight,viewModel->getCharacter1(),&Character::handleReleaseKeyRight);
+    connect(view->getBattle(),&Battle::releaseKeyDown,viewModel->getCharacter1(),&Character::handleReleaseKeyDown);
 
     //连接view的各种btn和sceneState model
-    connect(view->getMenu(),&Menu::startBtnClicked,sceneState,[=](){sceneState->turnToPage(Index::CastIndex);});
-    connect(view->getCast(),&Cast::backBtnClicked,sceneState,[=](){sceneState->turnToPage(Index::MenuIndex);});
-    connect(view->getCast(),&Cast::fightBtnClicked,sceneState,[=](){sceneState->turnToPage(Index::BattleIndex);});
-    connect(view->getSettlement(),&Settlement::onceMoreBtnClicked,sceneState,[=](){sceneState->turnToPage(Index::BattleIndex);});
-    connect(view->getSettlement(),&Settlement::returnMenuBtnClicked,sceneState,[=](){sceneState->turnToPage(Index::MenuIndex);});
+    connect(view->getMenu(),&Menu::startBtnClicked,viewModel->getSceneState(),[=](){viewModel->getSceneState()->turnToPage(Index::CastIndex);});
+    connect(view->getCast(),&Cast::backBtnClicked,viewModel->getSceneState(),[=](){viewModel->getSceneState()->turnToPage(Index::MenuIndex);});
+    connect(view->getCast(),&Cast::fightBtnClicked,viewModel->getSceneState(),[=](){viewModel->getSceneState()->turnToPage(Index::BattleIndex);});
+    connect(view->getSettlement(),&Settlement::onceMoreBtnClicked,viewModel->getSceneState(),[=](){viewModel->getSceneState()->turnToPage(Index::BattleIndex);});
+    connect(view->getSettlement(),&Settlement::returnMenuBtnClicked,viewModel->getSceneState(),[=](){viewModel->getSceneState()->turnToPage(Index::MenuIndex);});
     //connect sceneState的model变化->view层的变化
-    connect(sceneState,&SceneState::currentPageIndexChanged,view,&MainWindow::SetPage);
+    connect(viewModel->getSceneState(),&SceneState::currentPageIndexChanged,view,&MainWindow::SetPage);
 }

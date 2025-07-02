@@ -21,7 +21,6 @@ Fighter::Fighter(QGraphicsItem* parent,int roleNum,bool left):QGraphicsObject(pa
                 frames[Index::DefendingState].append(pix);
                 frames[Index::AttackingState].append(pix);
                 frames[Index::FallingState].append(pix);
-              qDebug()<<"success:"<<i;
             }
 
         }

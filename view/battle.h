@@ -48,7 +48,6 @@ private:
     Fighter* fighter0,*fighter1;
     ShowHealth *health0,*health1;
 
-
 };
 
 #endif // BATTLE_H

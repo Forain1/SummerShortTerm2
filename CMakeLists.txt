@@ -38,8 +38,7 @@ qt_add_executable(V1
     view/settlement.h view/settlement.cpp view/settlement.ui
     app/app.h app/app.cpp
     view/showhealth.h view/showhealth.cpp
-
-
+    model/topmodel.h model/topmodel.cpp
 )
 
 target_link_libraries(V1

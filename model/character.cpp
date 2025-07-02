@@ -1,11 +1,10 @@
 #include "character.h"
 #include "characterstate.h"
 #include <QDebug>
-Character::Character(int x,int y,Index::DirectionIndex direction,QObject *parent)
-    : QObject{parent},maxHealth{100},currentHealth{100},x(x),y(y)
+Character::Character(Index::DirectionIndex direction,QObject *parent)
+    : QObject{parent},maxHealth{100},currentHealth{100}
 {
     state=new IdleState(this);
-    groundY=y;
     characterDir=direction;
 }
 
@@ -16,7 +15,6 @@ void Character::setCharacterState(CharacterState *nextState){
 }
 
 void Character::nextFrame(){
-    qDebug()<<"xspeed:"<<xSpeed<<"state"<<state->getStateIndex();
     x+=xSpeed;
     y+=ySpeed;
     if(!isOnGround()){
@@ -50,8 +48,10 @@ void Character::switchToWalkingState(int vx){
 
 void Character::switchToAttackingState(){
     if(state->getStateIndex()==Index::IdleState||state->getStateIndex()==Index::WalkingState){
-        //攻击时速度/=2，朝向不变
-        xSpeed/=2;
+        //攻击时速度/=4，朝向不变
+        xSpeed/=4;
+        //攻击时朝向方向的碰撞箱变宽attackWidthInc
+        width+=attackWidthInc;
         setCharacterState(new AttackingState(this));
     }
 }

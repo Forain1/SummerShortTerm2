@@ -14,7 +14,6 @@ Cast::Cast(QWidget *parent,QString path)
     }
     connect(ui->fightBtn,&QPushButton::clicked,this,&Cast::fightBtnClicked);
     connect(ui->backBtn,&QPushButton::clicked,this,&Cast::backBtnClicked);
-
 }
 
 Cast::~Cast()

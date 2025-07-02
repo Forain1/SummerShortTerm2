@@ -48,6 +48,7 @@ void AttackingState::updateFrame(Character *parent){
     if(currentFrame<getMaxFrame()){
         currentFrame++;
     }else{
+        parent->setWidth(parent->getIdleWidth());
         parent->setCharacterState(new IdleState());
     }
 }
