@@ -12,3 +12,7 @@ void SceneState::setCurrentPageIndex(Index::PageIndex index){
         emit currentPageIndexChanged(index);
     }
 }
+
+void SceneState::turnToPage(Index::PageIndex index){
+    setCurrentPageIndex(index);
+}

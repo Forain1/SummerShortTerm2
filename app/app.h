@@ -7,7 +7,6 @@
 class MainWindow;
 class Character;
 class SceneState;
-class SceneController;
 
 class App : public QObject
 {
@@ -22,7 +21,6 @@ private:
     Character *c1;
 
     SceneState *sceneState;
-    SceneController *sceneController;
 
     void setConnection();
 };

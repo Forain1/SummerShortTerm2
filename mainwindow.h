@@ -3,8 +3,10 @@
 
 #include <QMainWindow>
 #include "ui_mainwindow.h"
-#include "controller/scenecontroller.h"
+#include "view/menu.h"
+#include "view/cast.h"
 #include "view/battle.h"
+#include "view/settlement.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,7 +21,10 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    Battle* getBattle();
+    Menu *getMenu();
+    Cast *getCast();
+    Battle *getBattle();
+    Settlement *getSettlement();
 public slots:
     void SetPage(Index::PageIndex index);
 

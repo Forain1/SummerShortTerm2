@@ -27,7 +27,7 @@ qt_add_executable(V1
     view/cast.h view/cast.cpp view/cast.ui
     model/character.h model/character.cpp
     model/characterstate.h model/characterstate.cpp
-    controller/scenecontroller.h controller/scenecontroller.cpp
+
     model/scenestate.h model/scenestate.cpp
     common/index.h
     view/battle.h view/battle.cpp

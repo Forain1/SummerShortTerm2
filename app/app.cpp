@@ -3,7 +3,6 @@
 #include "../mainwindow.h"
 #include "../model/character.h"
 #include "../model/scenestate.h"
-#include "../controller/scenecontroller.h"
 
 App::App(QObject *parent)
     : QObject{parent}
@@ -15,12 +14,8 @@ App::App(QObject *parent)
 
     timer=new QTimer(this);
     timer->setInterval(100);
-
-    setConnection();
-
     timer->start();
 
-    sceneController=new SceneController(view,this);
     sceneState=new SceneState(this);
 
     setConnection();
@@ -29,14 +24,14 @@ App::App(QObject *parent)
 }
 
 void App::setConnection(){
-    //通知model更新
+    //通知character model更新
     connect(timer,&QTimer::timeout,c0,&Character::nextFrame);
     connect(timer,&QTimer::timeout,c1,&Character::nextFrame);
-    //model更新完毕，更新view
+    //character model更新完毕，更新view
     connect(c0,&Character::frameUpdate,view->getBattle()->getFighter0(),&Fighter::nextFrame);
     connect(c1,&Character::frameUpdate,view->getBattle()->getFighter1(),&Fighter::nextFrame);
 
-    //连接按键信号和model槽函数
+    //连接按键信号和character model槽函数
     connect(view->getBattle(),&Battle::pressKeyA,c0,&Character::handlePressKeyA);
     connect(view->getBattle(),&Battle::pressKeyD,c0,&Character::handlePressKeyD);
     connect(view->getBattle(),&Battle::pressKeyW,c0,&Character::handlePressKeyW);
@@ -52,4 +47,13 @@ void App::setConnection(){
     connect(view->getBattle(),&Battle::releaseKeyLeft,c1,&Character::handleReleaseKeyLeft);
     connect(view->getBattle(),&Battle::releaseKeyRight,c1,&Character::handleReleaseKeyRight);
     connect(view->getBattle(),&Battle::releaseKeyDown,c1,&Character::handleReleaseKeyDown);
+
+    //连接view的各种btn和sceneState model
+    connect(view->getMenu(),&Menu::startBtnClicked,sceneState,[=](){sceneState->turnToPage(Index::CastIndex);});
+    connect(view->getCast(),&Cast::backBtnClicked,sceneState,[=](){sceneState->turnToPage(Index::MenuIndex);});
+    connect(view->getCast(),&Cast::fightBtnClicked,sceneState,[=](){sceneState->turnToPage(Index::BattleIndex);});
+    connect(view->getSettlement(),&Settlement::onceMoreBtnClicked,sceneState,[=](){sceneState->turnToPage(Index::BattleIndex);});
+    connect(view->getSettlement(),&Settlement::returnMenuBtnClicked,sceneState,[=](){sceneState->turnToPage(Index::MenuIndex);});
+    //connect sceneState的model变化->view层的变化
+    connect(sceneState,&SceneState::currentPageIndexChanged,view,&MainWindow::SetPage);
 }

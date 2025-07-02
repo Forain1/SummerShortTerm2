@@ -32,6 +32,19 @@ void MainWindow::SetPage(Index::PageIndex index){
     qDebug() << "Focus now on:" << QApplication::focusWidget();
 }
 
+Menu *MainWindow::getMenu(){
+    return qobject_cast<Menu *>(ui->stackedWidget->widget(Index::MenuIndex));
+}
+
+Cast *MainWindow::getCast(){
+    return qobject_cast<Cast *>(ui->stackedWidget->widget(Index::CastIndex));
+}
+
 Battle *MainWindow::getBattle(){
-    return qobject_cast<Battle*>(ui->stackedWidget->widget(Index::BattleIndex));
+    return qobject_cast<Battle *>(ui->stackedWidget->widget(Index::BattleIndex));
+}
+
+
+Settlement *MainWindow::getSettlement(){
+    return qobject_cast<Settlement *>(ui->stackedWidget->widget(Index::SettlementIndex));
 }

@@ -19,7 +19,11 @@ public:
 private:
     Index::PageIndex currentPageIndex;
 signals:
+    //更新currentPage后发出信号
     void currentPageIndexChanged(Index::PageIndex index);
+public slots:
+    //更新currentPage
+    void turnToPage(Index::PageIndex index);
 };
 
 #endif // SCENESTATE_H
