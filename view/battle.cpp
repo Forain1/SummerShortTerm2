@@ -116,7 +116,7 @@ void Battle::keyPressEvent(QKeyEvent* event){
     case Qt::Key_F:
         emit pressKeyAttack0();
         break;
-    case Qt::Key_Q:
+    case Qt::Key_L:
         emit pressKeyAttack1();
         break;
     default:

@@ -3,7 +3,7 @@
 #include <QDebug>
 
 Character::Character(Index::DirectionIndex direction,QObject *parent)
-    : QObject{parent},maxHealth{100},currentHealth{100}
+    : QObject{parent},maxHealth{100},currentHealth{100},attackWidth{0}
 {
     state=new IdleState(this);
     characterDir=direction;

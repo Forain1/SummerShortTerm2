@@ -22,7 +22,8 @@ public:
     void setWidth(int w){width=w;}
     void setHeight(int h){height=h;}
     void setGroundY(int y){groundY=y;}
-    void setHasHit(bool v) { hasHit = v; }
+    void setHasHit(bool v){hasHit=v;}
+    void setAttackWidth(int w){attackWidth=w;}
 
     int getCurrentHealth() const {return currentHealth;}
     CharacterState *getState() const {return state;};
@@ -35,6 +36,7 @@ public:
     int getWidth() const {return width;}
     int getHeight() const {return height;}
     int getAttackWidthInc() const {return attackWidthInc;}
+    int getAttackWidth() const {return attackWidth;}
 
     Index::DirectionIndex getDirection() const {return characterDir;}
 
@@ -72,6 +74,7 @@ private:
     int width;
     int height;
     int attackWidthInc=100;
+    int attackWidth;
     bool hasHit = false;
 
 public slots:

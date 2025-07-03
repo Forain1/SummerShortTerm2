@@ -4,6 +4,8 @@
 #include "../model/characterstate.h"
 #include "../common/index.h"
 
+#include <QDebug>
+
 TopModel::TopModel(QObject *parent)
     : QObject{parent}
     , c0(nullptr)
@@ -64,10 +66,33 @@ bool TopModel::isGameOver(){
 
 bool TopModel::isCharacterOverlapping(){
     if(c0 == nullptr || c1 == nullptr) return false;
-    return !(c0->getX()+c0->getWidth()<=c1->getX()||
-             c1->getX()+c1->getWidth()<=c0->getX()||
-             c0->getY()+c0->getHeight()<=c1->getY()||
-             c1->getY()+c1->getHeight()<=c0->getY());
+    int c0x0,c0x1,c0y0,c0y1,c1x0,c1x1,c1y0,c1y1;
+    if(c0->getDirection()==Index::leftIndex){
+        c0x0=c0->getX()-c0->getAttackWidth();
+        c0x1=c0->getX()+c0->getWidth();
+    }
+    else{
+        c0x0=c0->getX();
+        c0x1=c0->getX()+c0->getWidth()+c0->getAttackWidth();
+    }
+    if(c1->getDirection()==Index::leftIndex){
+        c1x0=c1->getX()-c1->getAttackWidth();
+        c1x1=c1->getX()+c1->getWidth();
+    }
+    else{
+        c1x0=c1->getX();
+        c1x1=c1->getX()+c1->getWidth()+c1->getAttackWidth();
+    }
+    c0y0=c0->getY();
+    c0y1=c0->getY()+c0->getHeight();
+    c1y0=c1->getY();
+    c1y1=c1->getY()+c1->getHeight();
+
+    bool xOverlap = !(c0x1 < c1x0 || c1x1 < c0x0);
+    bool yOverlap = !(c0y1 < c1y0 || c1y1 < c0y0);
+    qDebug()<<"xOverlap:"<<xOverlap;
+    qDebug()<<"yOverlap:"<<yOverlap;
+    return xOverlap && yOverlap;
 }
 
 void TopModel::judgeHurt(){
