@@ -57,21 +57,28 @@ void App::setCharacterConnection(){
     connect(viewModel->getCharacter1(),&Character::frameUpdate,view->getBattle()->getFighter1(),&Fighter::nextFrame);
 
     //连接按键信号和character model槽函数
-    connect(view->getBattle(),&Battle::pressKeyA,viewModel->getCharacter0(),&Character::handleC0LeftMove);
-    connect(view->getBattle(),&Battle::pressKeyD,viewModel->getCharacter0(),&Character::handleC0RightMove);
-    connect(view->getBattle(),&Battle::pressKeyW,viewModel->getCharacter0(),&Character::handleC0Jump);
-    connect(view->getBattle(),&Battle::pressKeyS,viewModel->getCharacter0(),&Character::handleC0Defend);
-    connect(view->getBattle(),&Battle::pressKeyLeft,viewModel->getCharacter1(),&Character::handleC1LeftMove);
-    connect(view->getBattle(),&Battle::pressKeyRight,viewModel->getCharacter1(),&Character::handleC1RightMove);
-    connect(view->getBattle(),&Battle::pressKeyUp,viewModel->getCharacter1(),&Character::handleC1Jump);
-    connect(view->getBattle(),&Battle::pressKeyDown,viewModel->getCharacter1(),&Character::handleC1Defend);
+    connect(view->getBattle(),&Battle::pressKeyA,viewModel->getCharacter0(),&Character::handleLeftMove);
+    connect(view->getBattle(),&Battle::pressKeyD,viewModel->getCharacter0(),&Character::handleRightMove);
+    connect(view->getBattle(),&Battle::pressKeyW,viewModel->getCharacter0(),&Character::handleJump);
+    connect(view->getBattle(),&Battle::pressKeyS,viewModel->getCharacter0(),&Character::handleDefend);
+    connect(view->getBattle(),&Battle::pressKeyAttack0,viewModel->getCharacter0(),&Character::handleAttack);
 
-    connect(view->getBattle(),&Battle::releaseKeyA,viewModel->getCharacter0(),&Character::handleC0StopLeftMove);
-    connect(view->getBattle(),&Battle::releaseKeyD,viewModel->getCharacter0(),&Character::handleC0StopRightMove);
-    connect(view->getBattle(),&Battle::releaseKeyS,viewModel->getCharacter0(),&Character::handleC0StopDefend);
-    connect(view->getBattle(),&Battle::releaseKeyLeft,viewModel->getCharacter1(),&Character::handleC1StopLeftMove);
-    connect(view->getBattle(),&Battle::releaseKeyRight,viewModel->getCharacter1(),&Character::handleC1StopRightMove);
-    connect(view->getBattle(),&Battle::releaseKeyDown,viewModel->getCharacter1(),&Character::handleC1StopDefend);
+    connect(view->getBattle(),&Battle::pressKeyLeft,viewModel->getCharacter1(),&Character::handleLeftMove);
+    connect(view->getBattle(),&Battle::pressKeyRight,viewModel->getCharacter1(),&Character::handleRightMove);
+    connect(view->getBattle(),&Battle::pressKeyUp,viewModel->getCharacter1(),&Character::handleJump);
+    connect(view->getBattle(),&Battle::pressKeyDown,viewModel->getCharacter1(),&Character::handleDefend);
+    connect(view->getBattle(),&Battle::pressKeyAttack1,viewModel->getCharacter1(),&Character::handleAttack);
+
+    connect(view->getBattle(),&Battle::releaseKeyA,viewModel->getCharacter0(),&Character::handleStopLeftMove);
+    connect(view->getBattle(),&Battle::releaseKeyD,viewModel->getCharacter0(),&Character::handleStopRightMove);
+    connect(view->getBattle(),&Battle::releaseKeyS,viewModel->getCharacter0(),&Character::handleStopDefend);
+    connect(view->getBattle(),&Battle::releaseKeyLeft,viewModel->getCharacter1(),&Character::handleStopLeftMove);
+    connect(view->getBattle(),&Battle::releaseKeyRight,viewModel->getCharacter1(),&Character::handleStopRightMove);
+    connect(view->getBattle(),&Battle::releaseKeyDown,viewModel->getCharacter1(),&Character::handleStopDefend);
+    //连接血量变化信号和view层血槽显示
+    connect(viewModel->getCharacter0(),&Character::healthUpdate,view->getBattle()->getHealth0(),&ShowHealth::changeHealth);
+    connect(viewModel->getCharacter1(),&Character::healthUpdate,view->getBattle()->getHealth1(),&ShowHealth::changeHealth);
+
 }
 void App::fightStart(){
     // 重置角色

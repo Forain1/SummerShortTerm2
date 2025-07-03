@@ -62,7 +62,7 @@ public:
     explicit AttackingState(QObject *parent=nullptr) : CharacterState(parent){}
     void updateFrame(Character *parent) override;
     Index::StateIndex getStateIndex() const override{return Index::AttackingState;}
-    int getMaxFrame() const override{return 0;}
+    int getMaxFrame() const override{return 3;}
 };
 
 class DefendingState:public CharacterState

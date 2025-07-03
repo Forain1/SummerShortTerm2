@@ -11,7 +11,7 @@ class Character : public QObject
 public:
     explicit Character(Index::DirectionIndex characterDir,QObject *parent = nullptr);
 
-    void setCurrentHealth(int h){currentHealth=h;}
+    void setCurrentHealth(int h){currentHealth=h;emit healthUpdate(h);}
     void setCharacterState(CharacterState *nextState);
     void setX(int xcoordinate){x=xcoordinate;}
     void setY(int ycoordinate){y=ycoordinate;}
@@ -64,8 +64,6 @@ private:
     int xSpeed=0,ySpeed=0;//x,y方向速度
     int groundY;
     Index::DirectionIndex characterDir;
-    bool aPressed = false;
-    bool dPressed = false;
     bool leftPressed = false;
     bool rightPressed = false;
 
@@ -77,24 +75,19 @@ private:
     bool hasHit = false;
 
 public slots:
-    void handleC0LeftMove();
-    void handleC0RightMove();
-    void handleC0Defend();
-    void handleC0Jump();
-    void handleC1LeftMove();
-    void handleC1RightMove();
-    void handleC1Jump();
-    void handleC1Defend();
-    void handleC0StopLeftMove();
-    void handleC0StopRightMove();
-    void handleC0StopDefend();
-    void handleC1StopLeftMove();
-    void handleC1StopRightMove();
-    void handleC1StopDefend();
+    void handleLeftMove();
+    void handleRightMove();
+    void handleJump();
+    void handleDefend();
+    void handleAttack();
+    void handleStopLeftMove();
+    void handleStopRightMove();
+    void handleStopDefend();
 
 
 signals:
-    void frameUpdate(Index::StateIndex stateIndex,int frame,int x,int y,Index::DirectionIndex characterDir,int currentHealth);
+    void frameUpdate(Index::StateIndex stateIndex,int frame,int x,int y,Index::DirectionIndex characterDir);
+    void healthUpdate(int currentHealth);
 };
 
 #endif // CHARACTER_H

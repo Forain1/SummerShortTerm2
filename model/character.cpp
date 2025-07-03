@@ -29,7 +29,7 @@ void Character::nextFrame(){
     if(xSpeed!=0){
         characterDir=xSpeed>0?Index::rightIndex : Index::leftIndex;
     }
-    emit frameUpdate(state->getStateIndex(),state->getCurrentFrame(),x,y,characterDir,currentHealth);//发送信号给fighter.让其改变动画
+    emit frameUpdate(state->getStateIndex(),state->getCurrentFrame(),x,y,characterDir);//发送信号给fighter.让其改变动画
 }
 
 void Character::switchToJumpingState(){
@@ -70,39 +70,7 @@ void Character::switchToIdleState(){
     }
 }
 
-void Character::handleC0LeftMove(){
-    if(!aPressed){
-        aPressed=true;
-        if(getState()->getStateIndex()==Index::JumpingState||getState()->getStateIndex()==Index::FallingState){
-            setXSpeed(-10);
-        }
-        else if(true){//需要在这里检测碰撞
-            switchToWalkingState(-10);
-        }
-    }
-}
-
-void Character::handleC0RightMove(){
-    if(!dPressed){
-        dPressed=true;
-        if(getState()->getStateIndex()==Index::JumpingState||getState()->getStateIndex()==Index::FallingState){
-            setXSpeed(10);
-        }
-        else if(true){//需要检测碰撞
-            switchToWalkingState(10);
-        }
-    }
-}
-
-void Character::handleC0Jump(){
-    switchToJumpingState();
-}
-
-void Character::handleC0Defend(){
-    switchToDefendingState();
-}
-
-void Character::handleC1LeftMove(){
+void Character::handleLeftMove(){
     if(!leftPressed){
         leftPressed=true;
         if(getState()->getStateIndex()==Index::JumpingState||getState()->getStateIndex()==Index::FallingState){
@@ -114,7 +82,7 @@ void Character::handleC1LeftMove(){
     }
 }
 
-void Character::handleC1RightMove(){
+void Character::handleRightMove(){
     if(!rightPressed){
         rightPressed=true;
         if(getState()->getStateIndex()==Index::JumpingState||getState()->getStateIndex()==Index::FallingState){
@@ -126,41 +94,19 @@ void Character::handleC1RightMove(){
     }
 }
 
-void Character::handleC1Jump(){
+void Character::handleJump(){
     switchToJumpingState();
 }
 
-void Character::handleC1Defend(){
+void Character::handleDefend(){
     switchToDefendingState();
 }
 
-void Character::handleC0StopLeftMove(){
-    aPressed = false;
-    if(!aPressed&&!dPressed){
-        setXSpeed(0);
-    }
-    if (getState()->getStateIndex() == Index::WalkingState) {
-        setCharacterState(new IdleState());
-    }
+void Character::handleAttack(){
+    switchToAttackingState();
 }
 
-void Character::handleC0StopRightMove(){
-    dPressed = false;
-    if(!aPressed&&!dPressed){
-        setXSpeed(0);
-    }
-    if (getState()->getStateIndex() == Index::WalkingState) {
-        setCharacterState(new IdleState());
-    }
-}
-
-void Character::handleC0StopDefend(){
-    if(getState()->getStateIndex()==Index::DefendingState){
-        setCharacterState(new IdleState());
-    }
-}
-
-void Character::handleC1StopLeftMove(){
+void Character::handleStopLeftMove(){
     leftPressed = false;
     if(!leftPressed&&!rightPressed){
         setXSpeed(0);
@@ -170,7 +116,7 @@ void Character::handleC1StopLeftMove(){
     }
 }
 
-void Character::handleC1StopRightMove(){
+void Character::handleStopRightMove(){
     rightPressed = false;
     if(!leftPressed&&!rightPressed){
         setXSpeed(0);
@@ -180,7 +126,7 @@ void Character::handleC1StopRightMove(){
     }
 }
 
-void Character::handleC1StopDefend(){
+void Character::handleStopDefend(){
     if(getState()->getStateIndex()==Index::DefendingState){
         setCharacterState(new IdleState());
     }

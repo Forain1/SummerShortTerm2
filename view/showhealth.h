@@ -6,8 +6,9 @@
 #define HEALTHWIDTH 100
 #define HEALTHHEIGHT 100
 
-class ShowHealth:public QGraphicsItem
+class ShowHealth:public QGraphicsObject
 {
+    Q_OBJECT
 public:
     ShowHealth(int health=100);
     QRectF boundingRect()const override;
