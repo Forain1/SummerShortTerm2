@@ -10,7 +10,7 @@
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-class MainWindow;
+class Game;
 }
 QT_END_NAMESPACE
 
@@ -29,6 +29,6 @@ public slots:
     void SetPage(Index::PageIndex index);
 
 private:
-    Ui::MainWindow *ui;
+    Ui::Game *ui;
 };
 #endif // MAINWINDOW_H

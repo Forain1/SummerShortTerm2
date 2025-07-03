@@ -14,7 +14,8 @@ class Menu : public Scene
 public:
     explicit Menu(QWidget *parent = nullptr,QString path="");
     ~Menu();
-
+public slots:
+    void showAbout();
 private:
     Ui::Menu *ui;
 signals:
