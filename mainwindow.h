@@ -27,7 +27,8 @@ public:
     Settlement *getSettlement();
 public slots:
     void SetPage(Index::PageIndex index);
-
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override;
 private:
     Ui::Game *ui;
 };

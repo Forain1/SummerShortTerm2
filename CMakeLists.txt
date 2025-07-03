@@ -37,6 +37,8 @@ qt_add_executable(V1
     model/topmodel.h model/topmodel.cpp
     view/bgmplayer.h view/bgmplayer.cpp
     view/about.h view/about.cpp view/about.ui
+    view/esc.h view/esc.cpp view/esc.ui
+
 )
 
 target_link_libraries(V1
