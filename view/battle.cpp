@@ -39,9 +39,18 @@ Battle::Battle(QWidget* parent,QString path,int role0Num,int role1Num):QGraphics
     health0->setPos(20,20);
     scene->addItem(health1);
     health1->setPos(BATTLEWIDTH-20-HEALTHWIDTH,20);
+
+    //生成背景音乐播放器
+    bgm = new BgmPlayer();
 }
 
-Battle::~Battle(){}
+Battle::~Battle(){
+    delete bgm;
+}
+
+void Battle::loadMusic(){
+    bgm->playBgm();
+}
 
 void Battle::loadBackground(const QString& imagePath)
 {

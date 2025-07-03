@@ -8,5 +8,6 @@
         <file>src/image4.png</file>
         <file>src/image5.png</file>
         <file>src/image6.png</file>
+        <file>src/music/battle0.mp3</file>
     </qresource>
 </RCC>

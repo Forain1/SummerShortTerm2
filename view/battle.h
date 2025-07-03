@@ -3,8 +3,11 @@
 #include<QGraphicsView>
 #include<QGraphicsScene>
 #include<QGraphicsItem>
+#include<QMediaPlayer>
+#include<QAudioOutput>
 #include"fighter.h"
 #include"showhealth.h"
+#include"bgmplayer.h"
 class Battle: public QGraphicsView
 {
     Q_OBJECT
@@ -18,6 +21,9 @@ public:
     //返回num指向的角色的长宽
     int getWidth(int num);
     int getHeight(int num);
+    //获取生命值视图
+    ShowHealth* getHealth0(){return health0;}
+    ShowHealth* getHealth1(){return health1;}
 signals:
     //按键按下信号
     //角色移动信号
@@ -43,14 +49,19 @@ signals:
     void releaseKeyRight();
     //角色初始化信息
     void initInfo(int w0,int h0,int w1,int h1);
+public slots:
+    void loadMusic();
 private:
     void loadBackground(const QString& path);
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
+    //画面展示
     QGraphicsScene* scene;
     QGraphicsPixmapItem* bgItem;
     Fighter* fighter0,*fighter1;
     ShowHealth *health0,*health1;
+    //声音播放
+    BgmPlayer* bgm;
 
 };
 
