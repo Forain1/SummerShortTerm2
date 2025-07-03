@@ -27,6 +27,9 @@ private:
 public slots:
     void getInfo(int c0Width,int c0Height,int c1Width,int c1Height);
     void nextFrame();
+
+signals:
+    void gameOver();
 };
 
 #endif // TOPMODEL_H

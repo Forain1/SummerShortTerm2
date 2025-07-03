@@ -52,10 +52,11 @@ void TopModel::nextFrame(){
     
     //各种model的交互
     judgeHurt();
-    if(!isGameOver()){
-        //调用各种model自身的nextFrame
-        c0->nextFrame();
-        c1->nextFrame();
+    //调用各种model自身的nextFrame
+    c0->nextFrame();
+    c1->nextFrame();
+    if(isGameOver()){
+        emit gameOver();
     }
 }
 

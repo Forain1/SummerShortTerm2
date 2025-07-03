@@ -48,6 +48,8 @@ void App::setSceneConnection(){
 
     //onceMore时，重置角色，启动计时器
     connect(view->getSettlement(),&Settlement::onceMoreBtnClicked,this,&App::fightStart);
+
+    connect(viewModel,&TopModel::gameOver,this,&App::fightStop);
 }
 
 
@@ -89,5 +91,6 @@ void App::fightStart(){
 
 void App::fightStop(){
     timer->stop();
+    viewModel->getSceneState()->turnToPage(Index::SettlementIndex);
 }
 
