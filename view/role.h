@@ -17,6 +17,8 @@ public:
 
 signals:
     void roleBtnClicked(int i);
+public slots:
+    void setBtn(bool);
 private:
     int roleNum;
     Ui::Role *ui;

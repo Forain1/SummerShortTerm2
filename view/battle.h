@@ -20,6 +20,7 @@ public:
     int getHeight(int num);
 signals:
     //按键按下信号
+    //角色移动信号
     void pressKeyA();
     void pressKeyD();
     void pressKeyW();
@@ -28,6 +29,9 @@ signals:
     void pressKeyDown();
     void pressKeyLeft();
     void pressKeyRight();
+    //角色攻击信号
+    void pressKeyAttack0();
+    void pressKeyAttack1();
     //按键释放信号
     void releaseKeyA();
     void releaseKeyD();

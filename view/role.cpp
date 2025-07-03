@@ -13,3 +13,7 @@ Role::~Role()
 {
     delete ui;
 }
+
+void Role::setBtn(bool flag){
+    ui->roleBtn->setEnabled(flag);
+}

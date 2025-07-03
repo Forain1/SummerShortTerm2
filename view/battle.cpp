@@ -104,6 +104,10 @@ void Battle::keyPressEvent(QKeyEvent* event){
     case Qt::Key_Up:
         emit pressKeyUp();
         break;
+    case Qt::Key_F:
+        emit pressKeyAttack0();
+    case Qt::Key_Q:
+        emit pressKeyAttack1();
     default:
         QGraphicsView::keyPressEvent(event);
         break;
