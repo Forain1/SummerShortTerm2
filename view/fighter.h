@@ -21,6 +21,7 @@ private:
     int currentFrame=0;
     Index::DirectionIndex currentDir;
     Index::StateIndex currentState=Index::IdleState;
+    void loadAnimation(QString state,int maxFrame);
 };
 
 #endif // FIGHTER_H

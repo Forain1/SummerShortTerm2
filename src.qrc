@@ -9,5 +9,40 @@
         <file>src/image5.png</file>
         <file>src/image6.png</file>
         <file>src/music/battle0.mp3</file>
+        <file>src/Character/Jump/0.png</file>
+        <file>src/Character/Jump/1.png</file>
+        <file>src/Character/Jump/2.png</file>
+        <file>src/Character/Jump/3.png</file>
+        <file>src/Character/Jump/4.png</file>
+        <file>src/Character/Jump/5.png</file>
+        <file>src/Character/Idle/0.png</file>
+        <file>src/Character/Idle/1.png</file>
+        <file>src/Character/Idle/2.png</file>
+        <file>src/Character/Idle/3.png</file>
+        <file>src/Character/Idle/4.png</file>
+        <file>src/Character/Idle/5.png</file>
+        <file>src/Character/Rush/0.png</file>
+        <file>src/Character/Rush/1.png</file>
+        <file>src/Character/Rush/2.png</file>
+        <file>src/Character/Rush/3.png</file>
+        <file>src/Character/Rush/4.png</file>
+        <file>src/Character/Rush/5.png</file>
+        <file>src/Character/Rush/6.png</file>
+        <file>src/Character/Rush/7.png</file>
+        <file>src/Character/Rush/8.png</file>
+        <file>src/Character/Defend/0.png</file>
+        <file>src/Character/Defend/1.png</file>
+        <file>src/Character/Defend/2.png</file>
+        <file>src/Character/Defend/3.png</file>
+        <file>src/Character/Fall/0.png</file>
+        <file>src/Character/Fall/1.png</file>
+        <file>src/Character/Fall/2.png</file>
+        <file>src/Character/Fall/3.png</file>
+        <file>src/Character/Attack/0.png</file>
+        <file>src/Character/Attack/1.png</file>
+        <file>src/Character/Attack/2.png</file>
+        <file>src/Character/Attack/3.png</file>
+        <file>src/Character/Attack/4.png</file>
+        <file>src/Character/Attack/5.png</file>
     </qresource>
 </RCC>

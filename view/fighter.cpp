@@ -10,19 +10,31 @@ Fighter::Fighter(QGraphicsItem* parent,int roleNum,bool left):QGraphicsObject(pa
     if(roleNum==0){
         frames.resize(6);
         qDebug()<<"loading image";
-        for(int i = 0 ;i < 6; i++){
+        loadAnimation("Idle",6);
+        loadAnimation("Jump",6);
+        loadAnimation("Attack",6);
+        loadAnimation("Defend",4);
+        loadAnimation("Fall",4);
+        loadAnimation("Rush",9);
+    }
+}
+
+void Fighter::loadAnimation(QString state,int maxFrame){
+    int index=-1;
+    if(state == "Idle") index = Index::IdleState;
+    else if(state == "Jump") index = Index::JumpingState;
+    else if(state == "Rush") index = Index::WalkingState;
+    else if(state == "Attack") index = Index::AttackingState;
+    else if(state == "Defend") index = Index::DefendingState;
+    else if(state == "Fall") index = Index::FallingState;
+    if(index>=0){
+        for(int i = 0 ;i < maxFrame; i++){
             QPixmap pix;
-            QString path = ":/src/image" + QString::number(i) +".png";
+            QString path = ":/src/Character/" +state+"/"+QString::number(i) +".png";
             pix.load(path);
             if(!pix.isNull()){
-                frames[Index::WalkingState].append(pix);
-                frames[Index::IdleState].append(pix);
-                frames[Index::JumpingState].append(pix);
-                frames[Index::DefendingState].append(pix);
-                frames[Index::AttackingState].append(pix);
-                frames[Index::FallingState].append(pix);
+                frames[index].append(pix);
             }
-
         }
     }
 }
