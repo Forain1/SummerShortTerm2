@@ -25,7 +25,7 @@ private:
     SceneState *sceneState;
 
 public slots:
-    void getSize(int c0Width,int c0Height,int c1Width,int c1Height);
+    void getInfo(int c0Width,int c0Height,int c1Width,int c1Height);
     void nextFrame();
 };
 

@@ -17,7 +17,8 @@ private:
 
     MainWindow *view;
     TopModel *viewModel;
-    void setConnection();
+    void setSceneConnection();
+    void setCharacterConnection();
     void fightStart();
     void fightStop();
 };

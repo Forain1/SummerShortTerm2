@@ -4,11 +4,6 @@ project(V1 LANGUAGES CXX)
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Core)
-find_package(Qt6 REQUIRED COMPONENTS Core)
-find_package(Qt6 REQUIRED COMPONENTS Core)
-find_package(Qt6 REQUIRED COMPONENTS Core)
-find_package(Qt6 REQUIRED COMPONENTS Core)
-find_package(Qt6 REQUIRED COMPONENTS Core)
 
 qt_standard_project_setup()
 
@@ -49,11 +44,6 @@ target_link_libraries(V1
 
 target_link_libraries(V1 PRIVATE Qt6::Widgets)
 target_link_libraries(V1 PRIVATE Qt6::Core)
-target_link_libraries(V1 PRIVATE Qt6::Core)
-target_link_libraries(V1 PRIVATE Qt6::Core)
-target_link_libraries(V1 PRIVATE Qt6::Core)
-target_link_libraries(V1 PRIVATE Qt6::Core)
-target_link_libraries(V1 PRIVATE Qt6::Core)
 
 
 include(GNUInstallDirs)
@@ -70,3 +60,5 @@ qt_generate_deploy_app_script(
     NO_UNSUPPORTED_PLATFORM_ERROR
 )
 install(SCRIPT ${deploy_script})
+
+add_subdirectory(test)

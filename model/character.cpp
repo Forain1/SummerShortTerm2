@@ -1,6 +1,7 @@
 #include "character.h"
 #include "characterstate.h"
 #include <QDebug>
+
 Character::Character(Index::DirectionIndex direction,QObject *parent)
     : QObject{parent},maxHealth{100},currentHealth{100}
 {
@@ -48,11 +49,9 @@ void Character::switchToWalkingState(int vx){
 
 void Character::switchToAttackingState(){
     if(state->getStateIndex()==Index::IdleState||state->getStateIndex()==Index::WalkingState){
-        //攻击时速度/=4，朝向不变
         xSpeed/=4;
-        //攻击时朝向方向的碰撞箱变宽attackWidthInc
-        width+=attackWidthInc;
         setCharacterState(new AttackingState(this));
+        hasHit = false;
     }
 }
 

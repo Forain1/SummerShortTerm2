@@ -15,23 +15,43 @@ App::App(QObject *parent)
 
     timer=new QTimer(this);
     timer->setInterval(100);
+    
+    // 连接timer到TopModel的nextFrame，但不启动
+    connect(timer,&QTimer::timeout,viewModel,&TopModel::nextFrame);
 
-    setConnection();
+    setSceneConnection();
 
     view->show();
 }
 
-void App::setConnection(){
-    //在按下fightBtn后，向battle层发送size信号
+void App::setSceneConnection(){
+    //在按下fightBtn后，battle层发送角色model相关info信号
     connect(view->getCast(),&Cast::fightBtnClicked,view->getBattle(),[=](){
         Battle *battle=view->getBattle();
         emit battle->initInfo(battle->getWidth(0),battle->getHeight(0),battle->getWidth(1),battle->getHeight(1));
     });
-    //size信号被model接收
-    connect(view->getBattle(),&Battle::initInfo,viewModel,&TopModel::getSize);
+    //info信号被model接收，model创建角色实例
+    connect(view->getBattle(),&Battle::initInfo,viewModel,[=](int w0,int h0,int w1,int h1){
+        viewModel->getInfo(w0,h0,w1,h1);
+        setCharacterConnection();
+        fightStart();
+    });
 
-    //model每一帧刷新
-    connect(timer,&QTimer::timeout,viewModel,&TopModel::nextFrame);
+    //连接view的各种btn和sceneState model
+    connect(view->getMenu(),&Menu::startBtnClicked,viewModel->getSceneState(),[=](){viewModel->getSceneState()->turnToPage(Index::CastIndex);});
+    connect(view->getCast(),&Cast::backBtnClicked,viewModel->getSceneState(),[=](){viewModel->getSceneState()->turnToPage(Index::MenuIndex);});
+    connect(view->getCast(),&Cast::fightBtnClicked,viewModel->getSceneState(),[=](){viewModel->getSceneState()->turnToPage(Index::BattleIndex);});
+    connect(view->getSettlement(),&Settlement::onceMoreBtnClicked,viewModel->getSceneState(),[=](){viewModel->getSceneState()->turnToPage(Index::BattleIndex);});
+    connect(view->getSettlement(),&Settlement::returnMenuBtnClicked,viewModel->getSceneState(),[=](){viewModel->getSceneState()->turnToPage(Index::MenuIndex);});
+    //connect sceneState的model变化->view层的变化
+    connect(viewModel->getSceneState(),&SceneState::currentPageIndexChanged,view,&MainWindow::SetPage);
+
+    //onceMore时，重置角色，启动计时器
+    connect(view->getSettlement(),&Settlement::onceMoreBtnClicked,this,&App::fightStart);
+}
+
+
+void App::setCharacterConnection(){
     //character model刷新完毕，更新view
     connect(viewModel->getCharacter0(),&Character::frameUpdate,view->getBattle()->getFighter0(),&Fighter::nextFrame);
     connect(viewModel->getCharacter1(),&Character::frameUpdate,view->getBattle()->getFighter1(),&Fighter::nextFrame);
@@ -52,23 +72,11 @@ void App::setConnection(){
     connect(view->getBattle(),&Battle::releaseKeyLeft,viewModel->getCharacter1(),&Character::handleC1StopLeftMove);
     connect(view->getBattle(),&Battle::releaseKeyRight,viewModel->getCharacter1(),&Character::handleC1StopRightMove);
     connect(view->getBattle(),&Battle::releaseKeyDown,viewModel->getCharacter1(),&Character::handleC1StopDefend);
-
-    //连接view的各种btn和sceneState model
-    connect(view->getMenu(),&Menu::startBtnClicked,viewModel->getSceneState(),[=](){viewModel->getSceneState()->turnToPage(Index::CastIndex);});
-    connect(view->getCast(),&Cast::backBtnClicked,viewModel->getSceneState(),[=](){viewModel->getSceneState()->turnToPage(Index::MenuIndex);});
-    connect(view->getCast(),&Cast::fightBtnClicked,viewModel->getSceneState(),[=](){viewModel->getSceneState()->turnToPage(Index::BattleIndex);});
-    connect(view->getSettlement(),&Settlement::onceMoreBtnClicked,viewModel->getSceneState(),[=](){viewModel->getSceneState()->turnToPage(Index::BattleIndex);});
-    connect(view->getSettlement(),&Settlement::returnMenuBtnClicked,viewModel->getSceneState(),[=](){viewModel->getSceneState()->turnToPage(Index::MenuIndex);});
-    //connect sceneState的model变化->view层的变化
-    connect(viewModel->getSceneState(),&SceneState::currentPageIndexChanged,view,&MainWindow::SetPage);
-
-    //进入battle时，重置角色，启动计时器
-    connect(view->getCast(),&Cast::fightBtnClicked,this,&App::fightStart);
-    connect(view->getSettlement(),&Settlement::onceMoreBtnClicked,this,&App::fightStart);
 }
-
 void App::fightStart(){
+    // 重置角色
     viewModel->initCharacter();
+    // 启动timer
     timer->start();
 }
 
