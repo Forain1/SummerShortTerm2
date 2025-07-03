@@ -9,7 +9,7 @@ find_package(Qt6 REQUIRED COMPONENTS MultimediaWidgets)
 qt_standard_project_setup()
 
 set(CMAKE_AUTORCC ON)
-
+set(CMAKE_AUTOUIC ON)
 
 
 qt_add_executable(V1
@@ -36,6 +36,9 @@ qt_add_executable(V1
     view/showhealth.h view/showhealth.cpp
     model/topmodel.h model/topmodel.cpp
     view/bgmplayer.h view/bgmplayer.cpp
+    view/about.h view/about.cpp view/about.ui
+    view/esc.h view/esc.cpp view/esc.ui
+
 )
 
 target_link_libraries(V1

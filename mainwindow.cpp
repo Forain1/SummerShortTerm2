@@ -5,11 +5,12 @@
 #include "common/index.h"
 #include "view/battle.h"
 #include "view/settlement.h"
+#include "view/esc.h"
 #include <QResizeEvent>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    , ui(new Ui::Game)
 {
     ui->setupUi(this);
     setFixedSize(1600,900);
@@ -19,6 +20,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->stackedWidget->addWidget(new  Battle(this,":/src/bg0.jpg"));
     ui->stackedWidget->addWidget(new Settlement(this));
     ui->stackedWidget->setCurrentIndex(Index::MenuIndex);
+
+    //初始化事件过滤器,这里需要过滤出esc键,使得在全局可以使用
+    ui->stackedWidget->widget(Index::MenuIndex)->installEventFilter(this);
+    ui->stackedWidget->widget(Index::CastIndex)->installEventFilter(this);
+    ui->stackedWidget->widget(Index::BattleIndex)->installEventFilter(this);
+
 }
 
 MainWindow::~MainWindow()
@@ -50,4 +57,17 @@ Battle *MainWindow::getBattle(){
 
 Settlement *MainWindow::getSettlement(){
     return qobject_cast<Settlement *>(ui->stackedWidget->widget(Index::SettlementIndex));
+}
+
+bool MainWindow::eventFilter(QObject *obj, QEvent *event){
+    if(event->type()==QEvent::KeyPress){
+        QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
+        if(!keyEvent->isAutoRepeat()&&keyEvent->key()==Qt::Key_Escape){
+            Esc esc;
+            esc.exec();
+            qDebug()<<"esc";
+            return true;
+        }
+    }
+    return QObject::eventFilter(obj,event);
 }

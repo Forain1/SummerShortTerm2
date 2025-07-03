@@ -10,7 +10,7 @@
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-class MainWindow;
+class Game;
 }
 QT_END_NAMESPACE
 
@@ -27,8 +27,9 @@ public:
     Settlement *getSettlement();
 public slots:
     void SetPage(Index::PageIndex index);
-
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override;
 private:
-    Ui::MainWindow *ui;
+    Ui::Game *ui;
 };
 #endif // MAINWINDOW_H
