@@ -5,6 +5,7 @@ find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS MultimediaWidgets)
 
+
 qt_standard_project_setup()
 
 set(CMAKE_AUTORCC ON)
@@ -42,7 +43,10 @@ target_link_libraries(V1
         Qt::Core
         Qt::Widgets
 )
+
 target_link_libraries(V1 PUBLIC Qt::MultimediaWidgets)
+
+
 
 
 include(GNUInstallDirs)
@@ -59,3 +63,5 @@ qt_generate_deploy_app_script(
     NO_UNSUPPORTED_PLATFORM_ERROR
 )
 install(SCRIPT ${deploy_script})
+
+add_subdirectory(test)

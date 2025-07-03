@@ -45,10 +45,19 @@ void DefendingState::updateFrame(Character *parent){
 }
 
 void AttackingState::updateFrame(Character *parent){
-    if(currentFrame<getMaxFrame()){
+    int maxFrame = getMaxFrame();
+    int curFrame = getCurrentFrame();
+    int baseWidth = parent->getIdleWidth();
+    int attackInc = parent->getAttackWidthInc(); // 攻击最大增量
+
+    // 动态调整width
+    int newWidth = baseWidth + (attackInc * curFrame) / (maxFrame > 0 ? maxFrame : 1);
+    parent->setWidth(newWidth);
+
+    if(curFrame < maxFrame){
         currentFrame++;
     }else{
-        parent->setWidth(parent->getIdleWidth());
+        parent->setWidth(baseWidth); // 恢复原始宽度
         parent->setCharacterState(new IdleState());
     }
 }

@@ -22,6 +22,7 @@ public:
     void setWidth(int w){width=w;}
     void setHeight(int h){height=h;}
     void setGroundY(int y){groundY=y;}
+    void setHasHit(bool v) { hasHit = v; }
 
     int getCurrentHealth() const {return currentHealth;}
     CharacterState *getState() const {return state;};
@@ -33,6 +34,7 @@ public:
     int getIdleHeight() const {return idleHeight;}
     int getWidth() const {return width;}
     int getHeight() const {return height;}
+    int getAttackWidthInc() const {return attackWidthInc;}
 
     Index::DirectionIndex getDirection() const {return characterDir;}
 
@@ -51,6 +53,9 @@ public:
     void switchToIdleState();
     //由topmodel层进行调用
     void nextFrame();
+
+    bool getHasHit() const { return hasHit; }
+
 private:
     int maxHealth;//最大生命值
     int currentHealth;//当前生命值
@@ -69,7 +74,7 @@ private:
     int width;
     int height;
     int attackWidthInc=100;
-
+    bool hasHit = false;
 
 public slots:
     void handleC0LeftMove();

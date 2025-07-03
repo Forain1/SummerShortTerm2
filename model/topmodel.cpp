@@ -6,10 +6,10 @@
 
 TopModel::TopModel(QObject *parent)
     : QObject{parent}
+    , c0(nullptr)
+    , c1(nullptr)
 {
     sceneState=new SceneState(this);
-    c0 = new Character(Index::rightIndex,this);
-    c1 = new Character(Index::leftIndex,this);
 }
 
 //在每次进入Battle页面时更新
@@ -31,8 +31,13 @@ void TopModel::initCharacter(){
     c1->setCurrentHealth(100);
 }
 
-//在roleSelection时获取相关信息
-void TopModel::getSize(int c0Width,int c0Height,int c1Width,int c1Height){
+//获取创建角色所需的相关信息
+void TopModel::getInfo(int c0Width,int c0Height,int c1Width,int c1Height){
+    if(c0!=nullptr)delete c0;
+    if(c1!=nullptr)delete c1;
+    c0 = new Character(Index::rightIndex,this);
+    c1 = new Character(Index::leftIndex,this);
+
     c0->setIdleWidth(c0Width);
     c0->setIdleHeight(c0Height);
     c1->setIdleWidth(c1Width);
@@ -40,6 +45,9 @@ void TopModel::getSize(int c0Width,int c0Height,int c1Width,int c1Height){
 }
 
 void TopModel::nextFrame(){
+    // 检查角色是否已创建
+    if(c0 == nullptr || c1 == nullptr) return;
+    
     //各种model的交互
     judgeHurt();
     if(!isGameOver()){
@@ -50,10 +58,12 @@ void TopModel::nextFrame(){
 }
 
 bool TopModel::isGameOver(){
+    if(c0 == nullptr || c1 == nullptr) return false;
     return c0->getCurrentHealth()<=0||c1->getCurrentHealth()<=0;
 }
 
 bool TopModel::isCharacterOverlapping(){
+    if(c0 == nullptr || c1 == nullptr) return false;
     return !(c0->getX()+c0->getWidth()<=c1->getX()||
              c1->getX()+c1->getWidth()<=c0->getX()||
              c0->getY()+c0->getHeight()<=c1->getY()||
@@ -61,14 +71,22 @@ bool TopModel::isCharacterOverlapping(){
 }
 
 void TopModel::judgeHurt(){
+    if(c0 == nullptr || c1 == nullptr) return;
+    
     if(isCharacterOverlapping()){
-        if(c1->getState()->getStateIndex()==Index::AttackingState){
-            if(c0->getState()->getStateIndex()==Index::DefendingState) c0->setCurrentHealth(c0->getCurrentHealth()-2);
-            else c0->setCurrentHealth(c0->getCurrentHealth()-5);
+        if(c1->getState()->getStateIndex()==Index::AttackingState && !c1->getHasHit()){
+            if(c0->getState()->getStateIndex()==Index::DefendingState)
+                c0->setCurrentHealth(c0->getCurrentHealth()-2);
+            else
+                c0->setCurrentHealth(c0->getCurrentHealth()-5);
+            c1->setHasHit(true);
         }
-        if(c0->getState()->getStateIndex()==Index::AttackingState){
-            if(c1->getState()->getStateIndex()==Index::DefendingState) c1->setCurrentHealth(c1->getCurrentHealth()-2);
-            else c1->setCurrentHealth(c1->getCurrentHealth()-5);
+        if(c0->getState()->getStateIndex()==Index::AttackingState && !c0->getHasHit()){
+            if(c1->getState()->getStateIndex()==Index::DefendingState)
+                c1->setCurrentHealth(c1->getCurrentHealth()-2);
+            else
+                c1->setCurrentHealth(c1->getCurrentHealth()-5);
+            c0->setHasHit(true);
         }
     }
 }
