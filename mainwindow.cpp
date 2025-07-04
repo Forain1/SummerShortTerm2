@@ -26,6 +26,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->stackedWidget->widget(Index::CastIndex)->installEventFilter(this);
     ui->stackedWidget->widget(Index::BattleIndex)->installEventFilter(this);
 
+    //连接esc
+    esc=new Esc(this);
+    connect(esc,&Esc::volumeChange,getBattle(),&Battle::volumeChange);
+
 }
 
 MainWindow::~MainWindow()
@@ -63,9 +67,9 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event){
     if(event->type()==QEvent::KeyPress){
         QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
         if(!keyEvent->isAutoRepeat()&&keyEvent->key()==Qt::Key_Escape){
-            Esc esc;
-            esc.exec();
+            esc->exec();
             qDebug()<<"esc";
+            emit pressEsc();
             return true;
         }
     }

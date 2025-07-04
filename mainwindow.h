@@ -7,6 +7,7 @@
 #include "view/cast.h"
 #include "view/battle.h"
 #include "view/settlement.h"
+#include "view/esc.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -27,9 +28,12 @@ public:
     Settlement *getSettlement();
 public slots:
     void SetPage(Index::PageIndex index);
+signals:
+    void pressEsc();
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
 private:
     Ui::Game *ui;
+    Esc* esc;
 };
 #endif // MAINWINDOW_H

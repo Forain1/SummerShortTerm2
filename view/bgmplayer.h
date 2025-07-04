@@ -9,6 +9,7 @@ public:
     ~BgmPlayer();
     void playBgm();
     void stopBgm();
+    void setVolume(int);
 private:
     QMediaPlayer* player;
     QAudioOutput* audioOutput;

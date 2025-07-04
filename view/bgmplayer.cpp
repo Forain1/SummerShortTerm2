@@ -6,7 +6,7 @@ BgmPlayer::BgmPlayer() {
 
     player->setAudioOutput(audioOutput);
     player->setSource(QUrl("qrc:/src/music/battle0.mp3"));
-    audioOutput->setVolume(0.5);
+    audioOutput->setVolume(0);
 }
 
 BgmPlayer::~BgmPlayer(){
@@ -20,4 +20,9 @@ void BgmPlayer::playBgm(){
 
 void BgmPlayer::stopBgm(){
     player->stop();
+}
+
+void BgmPlayer::setVolume(int v){
+    auto newV = v/100.0;
+    audioOutput->setVolume(newV);
 }

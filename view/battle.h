@@ -51,6 +51,7 @@ signals:
     void initInfo(int w0,int h0,int w1,int h1);
 public slots:
     void loadMusic();
+    void volumeChange(int);
 private:
     void loadBackground(const QString& path);
     void keyPressEvent(QKeyEvent* event);

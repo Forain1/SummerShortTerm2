@@ -14,7 +14,9 @@ class Esc : public QDialog
 public:
     explicit Esc(QWidget *parent = nullptr);
     ~Esc();
-
+signals:
+    void pressMenu();
+    void volumeChange(int);
 private:
     Ui::Esc *ui;
 };

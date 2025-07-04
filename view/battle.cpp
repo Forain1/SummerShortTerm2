@@ -48,6 +48,10 @@ Battle::~Battle(){
     delete bgm;
 }
 
+void Battle::volumeChange(int v){
+    bgm->setVolume(v);
+}
+
 void Battle::loadMusic(){
     bgm->playBgm();
 }
