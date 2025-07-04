@@ -71,9 +71,9 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event){
     if(event->type()==QEvent::KeyPress){
         QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
         if(!keyEvent->isAutoRepeat()&&keyEvent->key()==Qt::Key_Escape){
+            emit pressEsc();
             esc->exec();
             qDebug()<<"esc";
-            emit pressEsc();
             return true;
         }
     }

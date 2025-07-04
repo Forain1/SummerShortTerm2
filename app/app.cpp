@@ -55,6 +55,10 @@ void App::setSceneConnection(){
 
     //血量归0，游戏结束
     connect(viewModel,&TopModel::gameOver,this,&App::fightEnd);
+    //esc，游戏暂停，esc结束，游戏继续
+    connect(view,&MainWindow::pressEsc,this,&App::fightStop);
+    connect(view,&MainWindow::escToMenu,this,[=](){viewModel->getSceneState()->turnToPage(Index::MenuIndex);});
+    connect(view,&MainWindow::rejectEsc,this,&App::fightContinue);
 }
 
 
@@ -85,8 +89,8 @@ void App::setCharacterConnection(){
     //连接血量变化信号和view层血槽显示
     connect(viewModel->getCharacter0(),&Character::healthUpdate,view->getBattle()->getHealth0(),&ShowHealth::changeHealth);
     connect(viewModel->getCharacter1(),&Character::healthUpdate,view->getBattle()->getHealth1(),&ShowHealth::changeHealth);
-
 }
+
 void App::fightStart(){
     // 重置角色
     viewModel->initCharacter();

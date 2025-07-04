@@ -113,7 +113,7 @@ void TopModel::judgeHurt(){
             if(c0->getState()->getStateIndex()==Index::DefendingState)
                 c0->setCurrentHealth(c0->getCurrentHealth()-2);
             else
-                c0->setCurrentHealth(c0->getCurrentHealth()-100);
+                c0->setCurrentHealth(c0->getCurrentHealth()-5);
             c1->setHasHit(true);
         }
         if(c0->getState()->getStateIndex()==Index::AttackingState && !c0->getHasHit()){

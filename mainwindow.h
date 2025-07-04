@@ -28,7 +28,6 @@ public:
     Settlement *getSettlement();
 public slots:
     void SetPage(Index::PageIndex index);
-    void finishEsc(int);
 signals:
     void pressEsc();
     void rejectEsc();
