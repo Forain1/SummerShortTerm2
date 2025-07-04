@@ -1,6 +1,8 @@
 #include"fighter.h"
 #include<QPainter>
 #include<QTransform>
+#define RECWIDTH 400
+#define RECHEIGHT 200
 
 Fighter::Fighter(QGraphicsItem* parent,int roleNum,bool left):QGraphicsObject(parent) {
     //初始化角色图片的朝向
@@ -43,17 +45,17 @@ void Fighter::nextFrame(Index::StateIndex state , int frame ,int x ,int y,Index:
     currentState = state;
     currentFrame = frame;
     currentDir = characterDir;
-    this->setPos(x,y);
+    this->setPos(x-frames[currentState][currentFrame].width()/2,y+frames[currentState][currentFrame].height());
     update();
 }
 
 QRectF Fighter::boundingRect() const{
-    return QRectF(0,0,frames[currentState][currentFrame].width(),frames[currentState][currentFrame].height());
+    return QRectF(0,0,RECWIDTH,RECHEIGHT);
 }
 
 void Fighter::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
-    if(currentDir==Index::rightIndex){
-        //图像默认存储格式朝左,若角色此时朝向为右,则需展示翻转后的图片
+    if(currentDir==Index::leftIndex){
+        //图像默认存储格式朝右,若角色此时朝向为左,则需展示翻转后的图片
         QTransform trans;
         trans.scale(-1,1);
         QPixmap flipPix = frames[currentState][currentFrame].transformed(trans);
