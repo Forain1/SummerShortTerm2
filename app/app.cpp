@@ -14,7 +14,7 @@ App::App(QObject *parent)
     viewModel=new TopModel();
 
     timer=new QTimer(this);
-    timer->setInterval(100);
+    timer->setInterval(50);
     
     // 连接timer到TopModel的nextFrame，但不启动
     connect(timer,&QTimer::timeout,viewModel,&TopModel::nextFrame);
@@ -41,15 +41,20 @@ void App::setSceneConnection(){
     connect(view->getMenu(),&Menu::startBtnClicked,viewModel->getSceneState(),[=](){viewModel->getSceneState()->turnToPage(Index::CastIndex);});
     connect(view->getCast(),&Cast::backBtnClicked,viewModel->getSceneState(),[=](){viewModel->getSceneState()->turnToPage(Index::MenuIndex);});
     connect(view->getCast(),&Cast::fightBtnClicked,viewModel->getSceneState(),[=](){viewModel->getSceneState()->turnToPage(Index::BattleIndex);});
-    connect(view->getSettlement(),&Settlement::onceMoreBtnClicked,viewModel->getSceneState(),[=](){viewModel->getSceneState()->turnToPage(Index::BattleIndex);});
+    connect(view->getSettlement(),&Settlement::onceMoreBtnClicked,viewModel->getSceneState(),[=](){
+        //onceMore时,启动计时器
+        this->fightStart();
+        viewModel->getSceneState()->turnToPage(Index::BattleIndex);
+    });
+
+    //返回主菜单
     connect(view->getSettlement(),&Settlement::returnMenuBtnClicked,viewModel->getSceneState(),[=](){viewModel->getSceneState()->turnToPage(Index::MenuIndex);});
-    //connect sceneState的model变化->view层的变化
+
+    //connect sceneStateModel的变化->view层的变化
     connect(viewModel->getSceneState(),&SceneState::currentPageIndexChanged,view,&MainWindow::SetPage);
 
-    //onceMore时，重置角色，启动计时器
-    connect(view->getSettlement(),&Settlement::onceMoreBtnClicked,this,&App::fightStart);
-
-    connect(viewModel,&TopModel::gameOver,this,&App::fightStop);
+    //血量归0，游戏结束
+    connect(viewModel,&TopModel::gameOver,this,&App::fightEnd);
 }
 
 
@@ -89,8 +94,15 @@ void App::fightStart(){
     timer->start();
 }
 
-void App::fightStop(){
+void App::fightEnd(){
     timer->stop();
     viewModel->getSceneState()->turnToPage(Index::SettlementIndex);
 }
 
+void App::fightStop(){
+    timer->stop();
+}
+
+void App::fightContinue(){
+    timer->start();
+}

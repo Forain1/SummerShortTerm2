@@ -20,7 +20,9 @@ private:
     void setSceneConnection();
     void setCharacterConnection();
     void fightStart();
+    void fightEnd();
     void fightStop();
+    void fightContinue();
 };
 
 #endif // APP_H

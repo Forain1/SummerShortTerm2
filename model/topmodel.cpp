@@ -21,16 +21,25 @@ void TopModel::initCharacter(){
     c1->setWidth(c1->getIdleWidth());
     c1->setHeight(c1->getIdleHeight());
 
-    c0->setX(20);
-    c0->setY(BATTLEHEIGHT-c0->getIdleHeight());
-    c1->setX(BATTLEWIDTH-20-c1->getIdleWidth());
-    c1->setY(BATTLEHEIGHT-c1->getIdleHeight());
+    c0->setX(20+0.5*c0->getIdleWidth());
+    c0->setY(BATTLEHEIGHT);
+    c1->setX(BATTLEWIDTH-20-0.5*c1->getIdleWidth());
+    c1->setY(BATTLEHEIGHT);
 
-    c0->setGroundY(BATTLEHEIGHT-c0->getIdleHeight());
-    c1->setGroundY(BATTLEHEIGHT-c1->getIdleHeight());
+    c0->setGroundY(BATTLEHEIGHT);
+    c1->setGroundY(BATTLEHEIGHT);
+
+    c0->setCharacterState(new IdleState());
+    c1->setCharacterState(new IdleState());
 
     c0->setCurrentHealth(100);
     c1->setCurrentHealth(100);
+
+    c0->setDirection(Index::rightIndex);
+    c1->setDirection(Index::leftIndex);
+
+    emit c0->frameUpdate(c0->getState()->getStateIndex(),c0->getState()->getCurrentFrame(),c0->getX(),c0->getY(),c0->getDirection());
+    emit c1->frameUpdate(c1->getState()->getStateIndex(),c1->getState()->getCurrentFrame(),c1->getX(),c1->getY(),c1->getDirection());
 }
 
 //获取创建角色所需的相关信息
@@ -104,7 +113,7 @@ void TopModel::judgeHurt(){
             if(c0->getState()->getStateIndex()==Index::DefendingState)
                 c0->setCurrentHealth(c0->getCurrentHealth()-2);
             else
-                c0->setCurrentHealth(c0->getCurrentHealth()-5);
+                c0->setCurrentHealth(c0->getCurrentHealth()-100);
             c1->setHasHit(true);
         }
         if(c0->getState()->getStateIndex()==Index::AttackingState && !c0->getHasHit()){

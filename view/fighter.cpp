@@ -45,7 +45,7 @@ void Fighter::nextFrame(Index::StateIndex state , int frame ,int x ,int y,Index:
     currentState = state;
     currentFrame = frame;
     currentDir = characterDir;
-    this->setPos(x-frames[currentState][currentFrame].width()/2,y+frames[currentState][currentFrame].height());
+    this->setPos(x-frames[currentState][currentFrame].width()/2,y-frames[currentState][currentFrame].height());
     update();
 }
 

@@ -24,6 +24,7 @@ public:
     void setGroundY(int y){groundY=y;}
     void setHasHit(bool v){hasHit=v;}
     void setAttackWidth(int w){attackWidth=w;}
+    void setDirection(Index::DirectionIndex direction){characterDir=direction;}
 
     int getCurrentHealth() const {return currentHealth;}
     CharacterState *getState() const {return state;};
@@ -37,7 +38,6 @@ public:
     int getHeight() const {return height;}
     int getAttackWidthInc() const {return attackWidthInc;}
     int getAttackWidth() const {return attackWidth;}
-
     Index::DirectionIndex getDirection() const {return characterDir;}
 
     bool isOnGround(){return y>=groundY;}
