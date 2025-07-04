@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent)
     //连接esc
     esc=new Esc(this);
     connect(esc,&Esc::volumeChange,getBattle(),&Battle::volumeChange);
+    connect(esc,&Esc::rejected,this,&MainWindow::rejectEsc);
+    connect(esc,&Esc::pressMenu,this,&MainWindow::escToMenu);
 
 }
 
@@ -36,6 +38,8 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+
 
 void MainWindow::SetPage(Index::PageIndex index){
     ui->stackedWidget->setCurrentIndex(index);
