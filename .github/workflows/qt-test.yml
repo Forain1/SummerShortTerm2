@@ -20,6 +20,7 @@ jobs:
           version: 6.6.3
           modules: 'qtbase qtmultimedia qttools'
           cache: true
+          target: 'desktop'
 
       - name: Install system dependencies
         run: |
