@@ -1,4 +1,4 @@
-name: Build Qt Project with MSVC
+name: Build Qt Project with MinGW
 
 on:
   push:
@@ -11,24 +11,41 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout source code
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-    - name: Install Qt (full install, latest)
+    # 安装 Ninja 构建工具
+    - name: Install Ninja
+      run: choco install ninja
+
+    # 安装 MinGW
+    - name: Install MinGW
+      run: choco install mingw
+
+    # 设置环境变量（让后续命令能找到 MinGW）
+    - name: Add MinGW to PATH
+      shell: powershell
+      run: |
+        echo "::add-path::C:\\tools\\mingw64\\bin"
+
+    # 安装 Qt（MinGW版，整包）
+    - name: Install Qt (MinGW)
       uses: jurplel/install-qt-action@v3
       with:
-        version: '6.5.2'          
+        version: '6.5.2'
         target: desktop
-        arch: win64_msvc2019_64
+        arch: win64_mingw
+        # 不写 modules，安装完整包
 
-    - name: Configure with CMake and NMake
-      run: cmake -S . -B build -G "NMake Makefiles"
+    # CMake 配置，使用 Ninja 和 MinGW
+    - name: Configure with CMake and Ninja
+      run: cmake -S . -B build -G Ninja
 
-    - name: Build with NMake
+    # 构建
+    - name: Build with Ninja
       run: cmake --build build --parallel
 
-    - name: Upload Build Artifact
-      uses: actions/upload-artifact@v4
+    # 上传构建产物（可选）
+    - uses: actions/upload-artifact@v4
       with:
-        name: V1-msvc-build
+        name: mingw-qt-build
         path: build/
