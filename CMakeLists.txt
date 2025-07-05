@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.19)
 project(V1 LANGUAGES CXX)
 
-find_package(Qt6 6.4 REQUIRED COMPONENTS Core Widgets Multimedia)
+find_package(Qt6 6.6 REQUIRED COMPONENTS Core Widgets Multimedia)
 
 
 qt_standard_project_setup()

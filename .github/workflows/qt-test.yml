@@ -14,14 +14,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install Qt 6.4
+      - name: Install Qt 6.6.3 with Multimedia and Tools
         uses: jurplel/install-qt-action@v2
         with:
-          version: 6.4.0
+          version: 6.6.3
           modules: 'qtbase qtmultimedia qttools'
           cache: true
 
-      - name: Install dependencies
+      - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential cmake ninja-build
@@ -32,12 +32,12 @@ jobs:
           cd build
           cmake .. -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="${Qt6_DIR}"
 
-      - name: Build project
+      - name: Build entire project
         run: |
           cd build
           cmake --build .
 
-      - name: Run Qt unit tests (HealthModelTest)
+      - name: Run unit tests (HealthModelTest)
         run: |
           cd build
           ctest --output-on-failure
