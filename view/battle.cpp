@@ -41,19 +41,19 @@ Battle::Battle(QWidget* parent,QString path,int role0Num,int role1Num):QGraphics
     health1->setPos(BATTLEWIDTH-20-HEALTHWIDTH,20);
 
     //生成背景音乐播放器
-    bgm = new BgmPlayer();
+    // bgm = new BgmPlayer();
 }
 
 Battle::~Battle(){
-    delete bgm;
+    // delete bgm;
 }
 
 void Battle::volumeChange(int v){
-    bgm->setVolume(v);
+    // bgm->setVolume(v);
 }
 
 void Battle::loadMusic(){
-    bgm->playBgm();
+    // bgm->playBgm();
 }
 
 void Battle::loadBackground(const QString& imagePath)

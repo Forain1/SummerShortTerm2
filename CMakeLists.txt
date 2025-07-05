@@ -3,7 +3,7 @@ project(V1 LANGUAGES CXX)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
-find_package(Qt6 REQUIRED COMPONENTS MultimediaWidgets)
+# find_package(Qt6 REQUIRED COMPONENTS MultimediaWidgets)
 
 
 qt_standard_project_setup()
@@ -35,7 +35,7 @@ qt_add_executable(V1
     app/app.h app/app.cpp
     view/showhealth.h view/showhealth.cpp
     model/topmodel.h model/topmodel.cpp
-    view/bgmplayer.h view/bgmplayer.cpp
+    # view/bgmplayer.h view/bgmplayer.cpp
     view/about.h view/about.cpp view/about.ui
     view/esc.h view/esc.cpp view/esc.ui
 
@@ -47,7 +47,7 @@ target_link_libraries(V1
         Qt::Widgets
 )
 
-target_link_libraries(V1 PUBLIC Qt::MultimediaWidgets)
+# target_link_libraries(V1 PUBLIC Qt::MultimediaWidgets)
 
 
 

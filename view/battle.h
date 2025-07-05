@@ -3,11 +3,11 @@
 #include<QGraphicsView>
 #include<QGraphicsScene>
 #include<QGraphicsItem>
-#include<QMediaPlayer>
-#include<QAudioOutput>
+// #include<QMediaPlayer>
+// #include<QAudioOutput>
 #include"fighter.h"
 #include"showhealth.h"
-#include"bgmplayer.h"
+// #include"bgmplayer.h"
 class Battle: public QGraphicsView
 {
     Q_OBJECT
@@ -62,7 +62,7 @@ private:
     Fighter* fighter0,*fighter1;
     ShowHealth *health0,*health1;
     //声音播放
-    BgmPlayer* bgm;
+    // BgmPlayer* bgm;
 
 };
 
