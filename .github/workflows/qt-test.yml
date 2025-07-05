@@ -1,92 +1,54 @@
-name: Qt Test CI
+name: Qt6 Windows CI/CD
 
 on:
   push:
     branches: [ main, develop ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  build-and-test:
+    runs-on: windows-latest
     
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
       
-
-    - name: Setup Python and aqt
-      uses: actions/setup-python@v5
+    - name: Setup Qt6
+      uses: jurplel/install-qt-action@v4
       with:
-        python-version: '3.11'
-        
-    - name: Install aqt
-      run: |
-        python3 -m pip install aqtinstall==3.1.*
-        
-    - name: List available Qt modules
-      run: |
-        echo "Listing available Qt modules for 6.4.3 x64..."
-        python3 -m aqt list-qt linux desktop 6.4.3 --arch x64
-    
-    - name: Setup Qt
-      uses: jurplel/install-qt-action@v3
-      with:
-        version: '6.4.3'
+        version: '6.4.0'
         arch: 'x64'
+        modules: 'qtcharts qtdeclarative qtgraphicaleffects qtimageformats qtmultimedia qtquickcontrols qtquickcontrols2 qtsvg qttools qttranslations qtwebengine qtwebview'
         
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y build-essential cmake qt6-base-dev qt6-multimedia-dev qt6-test-dev
+    - name: Setup CMake
+      uses: jwlawson/actions-setup-cmake@v1.14
+      with:
+        cmake-version: '3.19'
         
-    - name: Create build directory
-      run: mkdir build
-      
     - name: Configure CMake
       run: |
-        cd build
-        cmake .. -DCMAKE_BUILD_TYPE=Debug
-        echo "CMake configuration completed"
+        cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
         
     - name: Build project
       run: |
-        cd build
-        make -j$(nproc)
-        echo "Build completed"
-        ls -la
-        echo "Test directory contents:"
-        ls -la test/ || echo "No test directory found"
-        
-    - name: Find test executable
-      run: |
-        cd build
-        echo "Looking for test executables..."
-        find . -name "*test*" -type f -executable
-        find . -name "*Test*" -type f -executable
+        cmake --build build --config Release --parallel
         
     - name: Run tests
       run: |
         cd build
-        echo "Running tests..."
-        if [ -f "./test/HealthModelTest" ]; then
-          echo "Found HealthModelTest, running..."
-          ./test/HealthModelTest
-        elif [ -f "./HealthModelTest" ]; then
-          echo "Found HealthModelTest in build root, running..."
-          ./HealthModelTest
-        else
-          echo "Test executable not found!"
-          exit 1
-        fi
+        ctest --output-on-failure
         
-    - name: Upload test results
+    - name: Deploy application
+      if: github.ref == 'refs/heads/main'
+      run: |
+        cd build
+        cmake --install . --prefix ./install
+        
+    - name: Upload build artifacts
+      if: github.ref == 'refs/heads/main'
       uses: actions/upload-artifact@v4
-      if: always()
       with:
-        name: test-results
-        path: |
-          build/test/*.xml
-          build/test/*.log
-          build/*.xml
-          build/*.log 
+        name: qt-app-windows
+        path: build/install/
+        retention-days: 30
