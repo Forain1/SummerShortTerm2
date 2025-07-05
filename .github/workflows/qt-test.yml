@@ -10,33 +10,34 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
-    env:
-      QT_VERSION: "6.4"
-      QT_DIR: "/opt/qt6.4"
-
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Qt 6.4
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: 6.4.0
+          modules: 'qtbase qtmultimedia qttools'
+          cache: true
 
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential cmake ninja-build
-          # 安装 Qt 6 (如果没有官方包可用，可以用官方线上安装器或第三方仓库)
-          # 这里用官方仓库 Qt 6.4 示例（可根据需要换版本）
-          sudo apt-get install -y qt6-base-dev qt6-multimedia-dev qt6-test-dev qt6-tools-dev qt6-tools-dev-tools qt6-svg-dev
 
-      - name: Configure project
+      - name: Configure CMake project
         run: |
-          mkdir build
+          mkdir -p build
           cd build
-          cmake .. -DCMAKE_BUILD_TYPE=Release
+          cmake .. -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="${Qt6_DIR}"
 
       - name: Build project
         run: |
           cd build
-          cmake --build . --config Release
+          cmake --build .
 
-      - name: Run tests
+      - name: Run Qt unit tests (HealthModelTest)
         run: |
           cd build
           ctest --output-on-failure
