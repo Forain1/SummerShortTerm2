@@ -23,7 +23,6 @@ jobs:
         version: '6.5.2'
         target: 'desktop'
         arch: 'win64_mingw'
-        modules: 'qtbase qtmultimediawidgets'
 
     - name: Configure with CMake and Ninja (MinGW)
       run: cmake -S . -B build -G Ninja
