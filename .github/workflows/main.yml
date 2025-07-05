@@ -11,7 +11,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v4
+    # 拉取项目源码
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
     # 安装 Ninja 构建工具
     - name: Install Ninja
@@ -21,31 +23,33 @@ jobs:
     - name: Install MinGW
       run: choco install mingw
 
-    # 设置环境变量（让后续命令能找到 MinGW）
+    # 把 MinGW 路径加入 PATH
     - name: Add MinGW to PATH
       shell: powershell
       run: echo "C:\\tools\\mingw64\\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
-
-    # 安装 Qt（MinGW版，整包）
-    - name: Install Qt (MinGW)
+    # 安装 Qt（MinGW 版本，完整包）
+    - name: Install Qt 6.5.2
       uses: jurplel/install-qt-action@v3
       with:
-        version: '6.9.1'
+        version: '6.5.2'
         target: desktop
         arch: win64_mingw
-        # 不写 modules，安装完整包
+        cache: true
 
-    # CMake 配置，使用 Ninja 和 MinGW
-    - name: Configure with CMake and Ninja
-      run: cmake -S . -B build -G Ninja
+    # 用 CMake 配置（指定 Qt 安装路径）
+    - name: Configure CMake
+      run: |
+        cmake -S . -B build -G Ninja -DCMAKE_PREFIX_PATH="${{ env.Qt6_DIR }}"
 
-    # 构建
-    - name: Build with Ninja
+    # 构建项目
+    - name: Build Project
       run: cmake --build build --parallel
 
+
     # 上传构建产物（可选）
-    - uses: actions/upload-artifact@v4
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
       with:
-        name: mingw-qt-build
+        name: V1-build
         path: build/
