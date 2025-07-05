@@ -1,54 +1,42 @@
-name: Qt6 Windows CI/CD
+name: Qt6 Test CI
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, master]
   pull_request:
-    branches: [ main, develop ]
+    branches: [main, master]
 
 jobs:
   build-and-test:
-    runs-on: windows-latest
-    
+    runs-on: ubuntu-latest
+
+    env:
+      QT_VERSION: "6.4"
+      QT_DIR: "/opt/qt6.4"
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup Qt6
-      uses: jurplel/install-qt-action@v4
-      with:
-        version: '6.4.0'
-        arch: 'x64'
-        modules: 'qtcharts qtdeclarative qtgraphicaleffects qtimageformats qtmultimedia qtquickcontrols qtquickcontrols2 qtsvg qttools qttranslations qtwebengine qtwebview'
-        
-    - name: Setup CMake
-      uses: jwlawson/actions-setup-cmake@v1.14
-      with:
-        cmake-version: '3.19'
-        
-    - name: Configure CMake
-      run: |
-        cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
-        
-    - name: Build project
-      run: |
-        cmake --build build --config Release --parallel
-        
-    - name: Run tests
-      run: |
-        cd build
-        ctest --output-on-failure
-        
-    - name: Deploy application
-      if: github.ref == 'refs/heads/main'
-      run: |
-        cd build
-        cmake --install . --prefix ./install
-        
-    - name: Upload build artifacts
-      if: github.ref == 'refs/heads/main'
-      uses: actions/upload-artifact@v4
-      with:
-        name: qt-app-windows
-        path: build/install/
-        retention-days: 30
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake ninja-build
+          # 安装 Qt 6 (如果没有官方包可用，可以用官方线上安装器或第三方仓库)
+          # 这里用官方仓库 Qt 6.4 示例（可根据需要换版本）
+          sudo apt-get install -y qt6-base-dev qt6-multimedia-dev qt6-test-dev qt6-tools-dev qt6-tools-dev-tools qt6-svg-dev
+
+      - name: Configure project
+        run: |
+          mkdir build
+          cd build
+          cmake .. -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build project
+        run: |
+          cd build
+          cmake --build . --config Release
+
+      - name: Run tests
+        run: |
+          cd build
+          ctest --output-on-failure
