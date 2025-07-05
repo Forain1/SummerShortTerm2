@@ -14,13 +14,12 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v4
 
-    - name: Install Qt (MSVC)
+    - name: Install Qt (full install, latest)
       uses: jurplel/install-qt-action@v3
       with:
-        version: '6.5.2'
-        target: 'desktop'
-        arch: 'win64_msvc2019_64'
-        modules: 'qtbase qtmultimedia qtmultimediawidgets'
+        version: 'latset'           # 或 'latest' （自动识别最新稳定版）
+        target: desktop
+        arch: win64_msvc2019_64
 
     - name: Configure with CMake and NMake
       run: cmake -S . -B build -G "NMake Makefiles"
