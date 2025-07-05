@@ -1,0 +1,54 @@
+name: Qt Test CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: '6.5.0'
+        arch: 'x64'
+        modules: 'qtcharts qtnetworkauth qtwebengine qtwebchannel qtwebview qtwebsockets qtwebchannel qtmultimedia'
+        
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential cmake
+        
+    - name: Create build directory
+      run: mkdir build
+      
+    - name: Configure CMake
+      run: |
+        cd build
+        cmake ..
+        
+    - name: Build project
+      run: |
+        cd build
+        make -j$(nproc)
+        
+    - name: Run tests
+      run: |
+        cd build
+        ./test/HealthModelTest
+        
+    - name: Upload test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: test-results
+        path: |
+          build/test/*.xml
+          build/test/*.log 
