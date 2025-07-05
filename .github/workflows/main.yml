@@ -24,14 +24,14 @@ jobs:
     # 设置环境变量（让后续命令能找到 MinGW）
     - name: Add MinGW to PATH
       shell: powershell
-      run: |
-        echo "::add-path::C:\\tools\\mingw64\\bin"
+      run: echo "C:\\tools\\mingw64\\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
 
     # 安装 Qt（MinGW版，整包）
     - name: Install Qt (MinGW)
       uses: jurplel/install-qt-action@v3
       with:
-        version: '6.5.2'
+        version: '6.9.1'
         target: desktop
         arch: win64_mingw
         # 不写 modules，安装完整包
