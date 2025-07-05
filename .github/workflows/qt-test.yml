@@ -19,7 +19,7 @@ jobs:
       with:
         version: '6.5.0'
         arch: 'x64'
-        modules: 'qtcharts qtnetworkauth qtwebengine qtwebchannel qtwebview qtwebsockets qtwebchannel qtmultimedia'
+        modules: 'qtcharts qtmultimedia qtmultimediawidgets'
         
     - name: Install dependencies
       run: |
@@ -32,17 +32,39 @@ jobs:
     - name: Configure CMake
       run: |
         cd build
-        cmake ..
+        cmake .. -DCMAKE_BUILD_TYPE=Debug
+        echo "CMake configuration completed"
         
     - name: Build project
       run: |
         cd build
         make -j$(nproc)
+        echo "Build completed"
+        ls -la
+        echo "Test directory contents:"
+        ls -la test/ || echo "No test directory found"
+        
+    - name: Find test executable
+      run: |
+        cd build
+        echo "Looking for test executables..."
+        find . -name "*test*" -type f -executable
+        find . -name "*Test*" -type f -executable
         
     - name: Run tests
       run: |
         cd build
-        ./test/HealthModelTest
+        echo "Running tests..."
+        if [ -f "./test/HealthModelTest" ]; then
+          echo "Found HealthModelTest, running..."
+          ./test/HealthModelTest
+        elif [ -f "./HealthModelTest" ]; then
+          echo "Found HealthModelTest in build root, running..."
+          ./HealthModelTest
+        else
+          echo "Test executable not found!"
+          exit 1
+        fi
         
     - name: Upload test results
       uses: actions/upload-artifact@v4
@@ -51,4 +73,6 @@ jobs:
         name: test-results
         path: |
           build/test/*.xml
-          build/test/*.log 
+          build/test/*.log
+          build/*.xml
+          build/*.log 
