@@ -1,18 +1,9 @@
-name: Qt6 Test CI
-
-on:
-  push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
-
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Install Qt 6.6.3 with Multimedia and Tools
         id: qt
@@ -23,13 +14,13 @@ jobs:
           target: 'desktop'
           cache: true
 
+      - name: Debug: Qt install path
+        run: echo "Qt installed at ${{ steps.qt.outputs.qt_path }}"
+
       - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential cmake ninja-build
-
-      - name: List installed Qt modules
-        run: ls $HOME/Qt/6.6.3/gcc_64/lib/cmake/
 
       - name: Configure CMake project
         run: |
@@ -37,7 +28,7 @@ jobs:
           cd build
           cmake .. -G Ninja \
             -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_PREFIX_PATH="$HOME/Qt/6.6.3/gcc_64"
+            -DCMAKE_PREFIX_PATH="${{ steps.qt.outputs.qt_path }}/gcc_64"
 
       - name: Build entire project
         run: |
