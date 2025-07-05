@@ -11,7 +11,13 @@ HealthModelTest::HealthModelTest(QObject *parent)
 void HealthModelTest::testAttackWidthAndSingleHit()
 {
     TopModel model;
+    
+    // 先创建角色
+    model.getInfo(50, 50, 50, 50);
+    
+    // 然后初始化角色
     model.initCharacter();
+    
     auto c0 = model.getCharacter0();
     auto c1 = model.getCharacter1();
 

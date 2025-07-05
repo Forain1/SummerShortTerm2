@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.19)
 project(V1 LANGUAGES CXX)
 
+
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 # find_package(Qt6 REQUIRED COMPONENTS MultimediaWidgets)
+
 
 
 qt_standard_project_setup()
@@ -45,7 +47,9 @@ target_link_libraries(V1
     PRIVATE
         Qt::Core
         Qt::Widgets
+        # Qt::Multimedia
 )
+
 
 # target_link_libraries(V1 PUBLIC Qt::MultimediaWidgets)
 
