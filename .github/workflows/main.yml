@@ -1,0 +1,35 @@
+name: Build Qt Project with MSVC
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v4
+
+    - name: Install Qt (MSVC)
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: '6.5.2'
+        target: 'desktop'
+        arch: 'win64_msvc2019_64'
+        modules: 'qtbase qtmultimedia qtmultimediawidgets'
+
+    - name: Configure with CMake and NMake
+      run: cmake -S . -B build -G "NMake Makefiles"
+
+    - name: Build with NMake
+      run: cmake --build build --parallel
+
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: V1-msvc-build
+        path: build/
