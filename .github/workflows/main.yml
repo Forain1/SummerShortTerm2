@@ -17,7 +17,7 @@ jobs:
     - name: Install Qt (full install, latest)
       uses: jurplel/install-qt-action@v3
       with:
-        version: 'latset'           # 或 'latest' （自动识别最新稳定版）
+        version: 'latest'           # 或 'latest' （自动识别最新稳定版）
         target: desktop
         arch: win64_msvc2019_64
 
