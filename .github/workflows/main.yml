@@ -1,0 +1,38 @@
+name: Build Qt Project with MinGW
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v4
+
+    - name: Install Ninja
+      run: choco install ninja
+
+    - name: Install Qt (MinGW)
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: '6.5.2'
+        target: 'desktop'
+        arch: 'win64_mingw'
+        modules: 'qtbase qtmultimediawidgets'
+
+    - name: Configure with CMake and Ninja (MinGW)
+      run: cmake -S . -B build -G Ninja
+
+    - name: Build with Ninja
+      run: cmake --build build --parallel
+
+    - name: Upload Build Artifact (optional)
+      uses: actions/upload-artifact@v4
+      with:
+        name: mingw-qt-build
+        path: build/
