@@ -24,8 +24,8 @@ jobs:
     # 设置环境变量（让后续命令能找到 MinGW）
     - name: Add MinGW to PATH
       shell: powershell
-      run: echo "C:\\tools\\mingw64\\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-
+      run: |
+        echo "::add-path::C:\\tools\\mingw64\\bin"
 
     # 安装 Qt（MinGW版，整包）
     - name: Install Qt (MinGW)
