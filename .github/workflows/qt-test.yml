@@ -14,16 +14,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       
-    - name: Setup Qt
-      uses: jurplel/install-qt-action@v3
-      with:
-        version: '6.4.3'
-        arch: 'x64'
 
     - name: List available Qt modules
       run: |
         echo "Listing available Qt modules for 6.4.3 x64..."
         python3 -m aqt list-qt linux desktop --modules 6.4.3 x64
+    
+    - name: Setup Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: '6.4.3'
+        arch: 'x64'
         
     - name: Install dependencies
       run: |
