@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.19)
 project(HealthModelTest LANGUAGES CXX)
 
-find_package(Qt6 REQUIRED COMPONENTS Test Core Widgets MultimediaWidgets)
+find_package(Qt6 REQUIRED COMPONENTS Test Core Widgets Multimedia)
 
 add_executable(HealthModelTest
     healthmodeltest.cpp
@@ -22,7 +22,7 @@ target_link_libraries(HealthModelTest PRIVATE
     Qt6::Test
     Qt6::Core
     Qt6::Widgets
-    Qt6::MultimediaWidgets
+    Qt6::Multimedia
 )
 
 # 运行测试
