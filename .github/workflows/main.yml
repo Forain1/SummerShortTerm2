@@ -1,4 +1,4 @@
-name: Build Qt Project with MinGW
+name: Build Qt Project with MSVC
 
 on:
   push:
@@ -14,24 +14,22 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v4
 
-    - name: Install Ninja
-      run: choco install ninja
-
-    - name: Install Qt (MinGW)
+    - name: Install Qt (MSVC)
       uses: jurplel/install-qt-action@v3
       with:
         version: '6.5.2'
         target: 'desktop'
-        arch: 'win64_mingw'
+        arch: 'win64_msvc2019_64'
+        modules: 'qtbase qtmultimedia qtmultimediawidgets'
 
-    - name: Configure with CMake and Ninja (MinGW)
-      run: cmake -S . -B build -G Ninja
+    - name: Configure with CMake and NMake
+      run: cmake -S . -B build -G "NMake Makefiles"
 
-    - name: Build with Ninja
+    - name: Build with NMake
       run: cmake --build build --parallel
 
-    - name: Upload Build Artifact (optional)
+    - name: Upload Build Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: mingw-qt-build
+        name: V1-msvc-build
         path: build/
