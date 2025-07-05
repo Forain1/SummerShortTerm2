@@ -19,12 +19,16 @@ jobs:
       with:
         version: '6.4.3'
         arch: 'x64'
-        modules: 'qtbase qtmultimedia qttest'
         
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential cmake
+        sudo apt-get install -y build-essential cmake qt6-base-dev qt6-multimedia-dev qt6-test-dev
+        
+    - name: List available Qt modules
+      run: |
+        echo "Listing available Qt modules for 6.4.3 x64..."
+        python3 -m aqt list-qt linux desktop --modules 6.4.3 x64
         
     - name: Create build directory
       run: mkdir build
