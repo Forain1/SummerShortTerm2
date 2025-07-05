@@ -15,6 +15,15 @@ jobs:
       uses: actions/checkout@v4
       
 
+    - name: Setup Python and aqt
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        
+    - name: Install aqt
+      run: |
+        python3 -m pip install aqtinstall==3.1.*
+        
     - name: List available Qt modules
       run: |
         echo "Listing available Qt modules for 6.4.3 x64..."
